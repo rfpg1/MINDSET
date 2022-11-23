@@ -1,17 +1,27 @@
 package com.application.MindSet.GestureDetector;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
+import com.application.MindSet.CreateGameActivity;
 import com.application.MindSet.MainActivity;
 import com.application.MindSet.ui.sports.Sports;
+import com.application.MindSet.ui.sports.SportsActivity;
+import com.application.MindSet.ui.sports.tennis.TennisActivity;
 
 public class SimpleGestureListener extends GestureDetector.SimpleOnGestureListener {
 
-    private final Sports sports;
+    private SportsActivity activity;
+    private Sports sports;
 
     public SimpleGestureListener(Sports sports) {
         this.sports = sports;
+    }
+
+    public SimpleGestureListener(SportsActivity tennisActivity) {
+        this.activity = tennisActivity;
     }
 
     @Override
@@ -36,8 +46,6 @@ public class SimpleGestureListener extends GestureDetector.SimpleOnGestureListen
         //  D => it's a LEFT swipe
         //
 
-        System.out.println("TEST2");
-
         float x1 = e1.getX();
         float y1 = e1.getY();
 
@@ -45,8 +53,14 @@ public class SimpleGestureListener extends GestureDetector.SimpleOnGestureListen
         float y2 = e2.getY();
 
         Direction direction = getDirection(x1,y1,x2,y2);
-        if(direction.equals(Direction.up)){
+        if(direction.equals(Direction.up) && sports != null){
             sports.show();
+        }
+        if(direction.equals(Direction.left) && activity != null && !(activity instanceof CreateGameActivity)) {
+            activity.changeActivity();
+        }
+        if(direction.equals(Direction.right) && activity != null && activity instanceof CreateGameActivity){
+            activity.changeActivity();
         }
         return onSwipe(direction);
     }
