@@ -1,11 +1,14 @@
 package com.application.MindSet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.application.MindSet.GestureDetector.SimpleGestureListener;
+import com.application.MindSet.ui.profile.ProfileActivity;
 import com.application.MindSet.ui.sports.Sports;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private GestureDetectorCompat mDetector;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setToolBar();
+        ToolBar.setToolBar(getSupportActionBar(), this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -40,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        this.navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-        Sports sports = new Sports(getSupportFragmentManager(), getApplicationContext());
+        NavigationUI.setupWithNavController(navView, navController);
+
+        Sports sports = Sports.getInstance();
+        sports.setManager(getSupportFragmentManager());
+        sports.setContext(this);
         this.mDetector = new GestureDetectorCompat(getApplicationContext(), new SimpleGestureListener(sports));
     }
 
@@ -51,15 +58,5 @@ public class MainActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event){
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }
-
-    private void setToolBar() {
-        ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View mCustomView = mInflater.inflate(R.layout.toolbar, null);
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);
     }
 }

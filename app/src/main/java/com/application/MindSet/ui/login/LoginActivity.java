@@ -18,6 +18,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import com.application.MindSet.MainActivity;
 import com.application.MindSet.R;
+import com.application.MindSet.ToolBar;
 import com.application.MindSet.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setToolBar();
+        ToolBar.setToolBar(getSupportActionBar(), this);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -51,15 +52,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Username or Password not filled",Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void setToolBar() {
-        ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View mCustomView = mInflater.inflate(R.layout.toolbar, null);
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);
     }
 }
