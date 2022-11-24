@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.ActionBar;
 
+import com.application.MindSet.ui.message.MessageActivity;
 import com.application.MindSet.ui.profile.ProfileActivity;
 
 public class ToolBar {
@@ -23,6 +24,12 @@ public class ToolBar {
         profile.setOnClickListener(view ->{
             if(!(activity instanceof ProfileActivity))
                 activity.startActivity(new Intent(activity.getApplicationContext(), ProfileActivity.class));
+        });
+        ImageButton message = mCustomView.findViewById(R.id.message);
+        message.setOnClickListener(view -> {
+            if(!(activity instanceof MessageActivity)){
+                activity.startActivity(new Intent(activity.getApplicationContext(), MessageActivity.class));
+            }
         });
     }
 }

@@ -26,7 +26,7 @@
         android:src="@drawable/logotipo" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/message"
         android:layout_width="60dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"

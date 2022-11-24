@@ -1,4 +1,4 @@
-package com.application.MindSet.ui.notifications;
+package com.application.MindSet.ui.game;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,21 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.application.MindSet.R;
-import com.application.MindSet.databinding.FragmentNotificationsBinding;
+import com.application.MindSet.databinding.FragmentCreateGameBinding;
 import com.application.MindSet.ui.game.ChooseLocalActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class CreateGameFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentCreateGameBinding binding;
     private ImageButton lastClicked;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentCreateGameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button go = binding.go;
         go.setBackgroundColor(Color.rgb(255, 100, 0));

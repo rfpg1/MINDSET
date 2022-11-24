@@ -7,16 +7,16 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.application.MindSet.ToolBar;
-import com.application.MindSet.databinding.ActivityCreateGameBinding;
+import com.application.MindSet.databinding.ActivityChooseLocalBinding;
 
 public class ChooseLocalActivity extends AppCompatActivity {
 
-    private ActivityCreateGameBinding binding;
+    private ActivityChooseLocalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCreateGameBinding.inflate(getLayoutInflater());
+        binding = ActivityChooseLocalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ToolBar.setToolBar(getSupportActionBar(), this);
         Button back = binding.back;
