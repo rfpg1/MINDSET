@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "287188894548",
+    "project_id": "sporthub-81e71",
+    "storage_bucket": "sporthub-81e71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287188894548:android:5904003adbc7ed4721bec1",
+        "android_client_info": {
+          "package_name": "com.application.MindSet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287188894548-8glu8s2ai8n20skmub6rjk3bsacj093i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6g1M-SdDx0uXsNLsEGigGFf0PzH2hF6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287188894548-8glu8s2ai8n20skmub6rjk3bsacj093i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
