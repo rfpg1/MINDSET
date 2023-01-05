@@ -1,61 +1,140 @@
 package com.application.MindSet.ui.game;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentCreateGameBinding;
-import com.application.MindSet.ui.game.ChooseLocalActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Map;
 
 public class CreateGameFragment extends Fragment {
 
     private FragmentCreateGameBinding binding;
-    private ImageButton lastClicked;
+    private DatePickerDialog datePickerDialog;
+    private Button dateBTN, localBTN;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String [] sports = getResources().getStringArray(R.array.sports);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.drop_down_item, sports);
+        binding.autoCompleteSelectSport.setAdapter(arrayAdapter);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentCreateGameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Button go = binding.go;
-        go.setBackgroundColor(Color.rgb(255, 100, 0));
-        go.setOnClickListener(view -> {
-            if(lastClicked != null)
-                startActivity(new Intent(getActivity(), ChooseLocalActivity.class));
+
+        String [] sports = getResources().getStringArray(R.array.sports);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.drop_down_item, sports);
+        binding.autoCompleteSelectSport.setAdapter(arrayAdapter);
+
+        initDatePicker(getContext());
+        dateBTN = binding.dateBTN;
+        dateBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog.show();
+            }
         });
 
-        List<ImageButton> buttons = new ArrayList<>();
-        buttons.add(binding.football);
-        buttons.add(binding.tennis);
-        buttons.add(binding.golf);
-        buttons.add(binding.volleyball);
-        buttons.add(binding.basketball);
-        buttons.add(binding.bowling);
-
-        for(ImageButton b : buttons){
-            b.setBackgroundColor(0x000000);
-            b.setOnClickListener(view -> {
-                if(lastClicked != null){
-                    lastClicked.setImageResource(R.drawable.futebol);
-                }
-                b.setImageResource(R.drawable.futebol_selected);
-                lastClicked = b;
-            });
-        }
+        localBTN = binding.localBTN;
+        localBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapsActivity = new Intent(getContext(), MapsActivity.class);
+                startActivity(mapsActivity);
+            }
+        });
 
         return root;
+    }
+
+    private void initDatePicker(Context context) {
+
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month += 1;
+                String date = day + " " + getMonthFormat(month) + " " + year;
+                dateBTN.setText(date);
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(context, style, dateSetListener, year, month, day);
+    }
+
+    private String getMonthFormat(int month) {
+        switch (month){
+            case 1:
+                return "JAN";
+            case 2:
+                return "FEV";
+            case 3:
+                return "MAR";
+            case 4:
+                return "ABR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SET";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            case 12:
+                return "DEC";
+        }
+        return null;
     }
 
     @Override

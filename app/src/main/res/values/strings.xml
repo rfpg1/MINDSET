@@ -33,4 +33,14 @@
     <string name="prompt_sex">Sex</string>
     <string name="prompt_date_of_birth">Birth date</string>
     <string name="prompt_last_name">Last name</string>
+
+    <string-array name="sports">
+        <item>Football</item>
+        <item>Basketball</item>
+        <item>Volleyball</item>
+        <item>Tennis</item>
+        <item>Boxing</item>
+        <item>Rugby</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

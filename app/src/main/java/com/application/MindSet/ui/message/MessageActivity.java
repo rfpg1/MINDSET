@@ -7,13 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.application.MindSet.MainActivity;
-import com.application.MindSet.R;
 import com.application.MindSet.ToolBar;
-import com.application.MindSet.databinding.ActivityChooseLocalBinding;
 import com.application.MindSet.databinding.ActivityMessageBinding;
-
-import java.util.zip.Inflater;
-
 public class MessageActivity extends AppCompatActivity {
 
     private ActivityMessageBinding binding;
