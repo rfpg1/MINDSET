@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -38,6 +39,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -46,6 +49,23 @@ public class CreateGameFragment extends Fragment {
     private FragmentCreateGameBinding binding;
     private DatePickerDialog datePickerDialog;
     private Button dateBTN, localBTN;
+    private String sport, date, local;
+    private ArrayList<String> participants;
+    private final static int REQUEST_CODE = 101;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUEST_CODE:
+                if(resultCode == -1){
+                    Bundle extras = data.getExtras();
+                    if (extras != null){
+                        local = extras.getString("location");
+                    }
+                }
+        }
+    }
 
     @Override
     public void onResume() {
@@ -53,6 +73,12 @@ public class CreateGameFragment extends Fragment {
         String [] sports = getResources().getStringArray(R.array.sports);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.drop_down_item, sports);
         binding.autoCompleteSelectSport.setAdapter(arrayAdapter);
+        if (date != null){
+            dateBTN.setText(date);
+        }
+        if (local != null){
+            localBTN.setText(local);
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,7 +105,7 @@ public class CreateGameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent mapsActivity = new Intent(getContext(), MapsActivity.class);
-                startActivity(mapsActivity);
+                startActivityForResult(mapsActivity, REQUEST_CODE);
             }
         });
 
@@ -92,7 +118,7 @@ public class CreateGameFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
-                String date = day + " " + getMonthFormat(month) + " " + year;
+                date = day + " " + getMonthFormat(month) + " " + year;
                 dateBTN.setText(date);
             }
         };

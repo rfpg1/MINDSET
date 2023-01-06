@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.application.MindSet.databinding.ActivitySignUpBinding;
+import com.application.MindSet.ui.profile.ProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -71,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             progressDialog.dismiss();
                             Toast.makeText(SignUpActivity.this, "Your account has been created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                            startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
                         }else{
                             progressDialog.dismiss();
                             Toast.makeText(SignUpActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();

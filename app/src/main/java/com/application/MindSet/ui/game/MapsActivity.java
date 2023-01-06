@@ -6,10 +6,13 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.ActivityMapsBinding;
@@ -25,13 +28,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private Button cancelBtn, chooseBtn;
+    private LatLng local;
     private static final int REQUEST_CODE = 101;
 
     @Override
@@ -47,6 +51,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        cancelBtn = binding.cancelBTN;
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
+        chooseBtn = binding.chooseBTN;
+        chooseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backToCreate = new Intent();
+                backToCreate.putExtra("location", local.toString());
+                setResult(RESULT_OK, backToCreate);
+                finish();
+            }
+        });
     }
 
     /**
@@ -62,8 +86,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        getCurrentLocation();
         mMap.setMyLocationEnabled(true);
+        goToCurrentLocation();
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                mMap.clear();
+                local = latLng;
+                mMap.addMarker(new MarkerOptions().position(latLng));
+            }
+        });
     }
 
     @Override
@@ -72,13 +104,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch (requestCode) {
             case REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
+                    goToCurrentLocation();
                 }
         }
     }
 
     @SuppressLint("MissingPermission")
-    private void getCurrentLocation(){
+    private void goToCurrentLocation(){
         if(ActivityCompat.checkSelfPermission(
     this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(
@@ -96,8 +128,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 super.onLocationResult(locationResult);
                 Location curr = locationResult.getLastLocation();
                 LatLng currLL = new LatLng(curr.getLatitude(), curr.getLongitude());
-                mMap.addCircle(new CircleOptions().center(currLL).fillColor(Color.rgb(255,191,0)).radius(5));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(currLL));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLL,17));
             }
         };

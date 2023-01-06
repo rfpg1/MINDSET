@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/usernameET"
         android:layout_below="@+id/signupTV"
-        android:hint="@string/prompt_username"
+        android:hint="Email"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:layout_margin="10dp"
