@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentCreateGameBinding;
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.card.MaterialCardView;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -48,7 +50,9 @@ public class CreateGameFragment extends Fragment {
 
     private FragmentCreateGameBinding binding;
     private DatePickerDialog datePickerDialog;
+    private DialogFragment addPFrag;
     private Button dateBTN, localBTN;
+    private MaterialCardView addPlayerBTN;
     private String sport, date, local;
     private ArrayList<String> participants;
     private final static int REQUEST_CODE = 101;
@@ -106,6 +110,15 @@ public class CreateGameFragment extends Fragment {
             public void onClick(View view) {
                 Intent mapsActivity = new Intent(getContext(), MapsActivity.class);
                 startActivityForResult(mapsActivity, REQUEST_CODE);
+            }
+        });
+
+        addPFrag = new DialogFragment(R.layout.fragment_feed);
+        addPlayerBTN = binding.addPlayerBTN;
+        addPlayerBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPFrag.show(getChildFragmentManager(), "ADD PLAYER");
             }
         });
 

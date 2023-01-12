@@ -103,46 +103,26 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="3dp"
-                app:cardBackgroundColor="@color/orange" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                app:cardBackgroundColor="@color/orange" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                app:cardBackgroundColor="@color/orange" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                app:cardBackgroundColor="@color/orange" />
+                android:layout_margin="5dp"
+                app:cardBackgroundColor="@color/orange"
+                android:id="@+id/addPlayerBTN"
+                android:onClick="addPlayer">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_add_24">
+                    </ImageView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </HorizontalScrollView>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/playerAddBTN"
+        android:id="@+id/createBTN"
         android:layout_below="@id/playersHSV"
         android:layout_alignRight="@id/playersHSV"
         android:layout_marginRight="32dp"
-        android:text="ADD"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playerRmvBTN"
-        android:layout_below="@id/playersHSV"
-        android:layout_alignLeft="@id/playersHSV"
-        android:layout_marginLeft="32dp"
-        android:text="Remove"/>
-
+        android:text="CREATE"/>
 
 </RelativeLayout>
