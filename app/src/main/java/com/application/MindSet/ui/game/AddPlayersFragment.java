@@ -3,6 +3,7 @@ package com.application.MindSet.ui.game;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,19 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentFeedBinding;
-import com.application.MindSet.ui.home.Feed;
-import com.application.MindSet.ui.home.FeedRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AddPlayersFragment extends Fragment {
+public class AddPlayersFragment extends DialogFragment {
 
-    private ArrayList<String> playersList = new ArrayList<>();
+    private List<String> playersList = new ArrayList<>();
 
     private FragmentFeedBinding binding;
     private RecyclerView view;
+
+    public AddPlayersFragment(List<String> names) {
+        this.playersList = names;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,22 +35,17 @@ public class AddPlayersFragment extends Fragment {
         binding = FragmentFeedBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         view = binding.view;
-        setFeed();
         setAdapter();
 
         return root;
     }
 
     private void setAdapter() {
-        /*FeedRecyclerViewAdapter adapter = new FeedRecyclerViewAdapter(playersList);
+        AddPlayersRecyclerViewAdapter adapter = new AddPlayersRecyclerViewAdapter(this.playersList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         view.setLayoutManager(layoutManager);
         view.setItemAnimator(new DefaultItemAnimator());
-        view.setAdapter(adapter);*/
-    }
-
-    private void setFeed() {
-        
+        view.setAdapter(adapter);
     }
 
     @Override

@@ -39,11 +39,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 public class CreateGameFragment extends Fragment {
@@ -113,12 +119,25 @@ public class CreateGameFragment extends Fragment {
             }
         });
 
-        addPFrag = new DialogFragment(R.layout.fragment_feed);
+
         addPlayerBTN = binding.addPlayerBTN;
         addPlayerBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addPFrag.show(getChildFragmentManager(), "ADD PLAYER");
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                List<String> names = new ArrayList<>();
+                db.collection("Profiles").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                names.add((String) queryDocumentSnapshot.get("name"));
+                            }
+                            addPFrag = new AddPlayersFragment(names);
+                            addPFrag.show(getChildFragmentManager(), "ADD PLAYER");
+                        }
+                    }
+                });
             }
         });
 
