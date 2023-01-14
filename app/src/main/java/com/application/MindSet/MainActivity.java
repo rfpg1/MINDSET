@@ -1,18 +1,8 @@
 package com.application.MindSet;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageButton;
 
-import com.application.MindSet.GestureDetector.SimpleGestureListener;
-import com.application.MindSet.ui.profile.ProfileActivity;
-import com.application.MindSet.ui.sports.Sports;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GestureDetectorCompat;
@@ -21,7 +11,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.application.MindSet.GestureDetector.SimpleGestureListener;
 import com.application.MindSet.databinding.ActivityMainBinding;
+import com.application.MindSet.ui.sports.Sports;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

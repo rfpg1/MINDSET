@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="USER" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="TAG" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -16,12 +16,12 @@
   <component name="ChangeListManager">
     <list default="true" id="168b43c6-976f-4143-9db6-8709df2cbf63" name="Changes" comment="Create game half done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/DTO/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/DTO/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersRecyclerViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/home/FeedRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/home/FeedRecyclerViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_feed_list_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_feed_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players_item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,9 +208,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersRecyclerViewAdapter.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java</url>
+          <line>164</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
