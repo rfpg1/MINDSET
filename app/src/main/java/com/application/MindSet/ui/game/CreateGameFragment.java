@@ -1,12 +1,12 @@
 package com.application.MindSet.ui.game;
 
-import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +18,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
-import com.application.MindSet.DTO.Game;
+import com.application.MindSet.dto.Game;
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentCreateGameBinding;
-import com.application.MindSet.ui.home.FeedFragment;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.application.MindSet.notification.Notification;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,10 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CreateGameFragment extends Fragment {
@@ -141,7 +134,7 @@ public class CreateGameFragment extends Fragment {
                             players.remove(entry);
                         }
                     }
-                                                            //Nome dos jogadores a convidar
+                                                    //Nome dos jogadores a convidar
                     addPFrag = new AddPlayersFragment(new ArrayList<>(players.values()),
                                                     //IDs dos jogadores a convidar
                             playerInGame, new ArrayList<>(players.keySet()));
@@ -166,8 +159,8 @@ public class CreateGameFragment extends Fragment {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Games").add(g).addOnSuccessListener(documentReference -> {
                     Toast.makeText(getActivity(), "Game created", Toast.LENGTH_SHORT).show();
-                    //TODO: Voltar para a secção do feed
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
+                    createNotificationForGame();
                 });
             } else {
                 Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
@@ -176,6 +169,22 @@ public class CreateGameFragment extends Fragment {
 
         return root;
     }
+
+    private void createNotificationForGame() {
+        Intent intent = new Intent(getActivity(), Notification.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        long now = System.currentTimeMillis();
+
+        long tenSecs = 1000 * 10;
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                now + tenSecs,
+                pendingIntent);
+    }
+
 
     private void initDatePicker(Context context) {
 

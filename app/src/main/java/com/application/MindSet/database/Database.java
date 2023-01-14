@@ -1,4 +1,4 @@
-package com.application.MindSet.Database;
+package com.application.MindSet.database;
 
 import android.util.Log;
 

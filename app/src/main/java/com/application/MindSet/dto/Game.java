@@ -1,4 +1,4 @@
-package com.application.MindSet.DTO;
+package com.application.MindSet.dto;
 
 import java.io.Serializable;
 import java.sql.Date;

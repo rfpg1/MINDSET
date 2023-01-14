@@ -16,19 +16,20 @@
   <component name="ChangeListManager">
     <list default="true" id="168b43c6-976f-4143-9db6-8709df2cbf63" name="Changes" comment="Create game half done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/DTO/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/DTO/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/DTO/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/dto/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/GestureDetector/SimpleGestureListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/gestureDetector/SimpleGestureListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/AddPlayersRecyclerViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_players_item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[R58N61NWCXY]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ricar\.android\avd\Pixel_3a_API_33_x86_64.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -208,9 +209,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/application/MindSet/ui/game/CreateGameFragment.java</url>
-          <line>164</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/application/MindSet/MainActivity.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

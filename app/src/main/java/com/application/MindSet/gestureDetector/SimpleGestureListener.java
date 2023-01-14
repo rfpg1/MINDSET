@@ -1,4 +1,4 @@
-package com.application.MindSet.GestureDetector;
+package com.application.MindSet.gestureDetector;
 
 import android.util.Log;
 import android.view.GestureDetector;

@@ -1,5 +1,12 @@
 package com.application.MindSet;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
@@ -11,8 +18,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.application.MindSet.GestureDetector.SimpleGestureListener;
+import com.application.MindSet.gestureDetector.SimpleGestureListener;
 import com.application.MindSet.databinding.ActivityMainBinding;
+import com.application.MindSet.notification.Notification;
 import com.application.MindSet.ui.sports.Sports;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,10 +52,25 @@ public class MainActivity extends AppCompatActivity {
         sports.setManager(getSupportFragmentManager());
         sports.setContext(this);
         this.mDetector = new GestureDetectorCompat(getApplicationContext(), new SimpleGestureListener(sports));
+
+        createNotificationChannel();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "NotificationChannel";
+            String description = "Channel for game notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(Notification.CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
