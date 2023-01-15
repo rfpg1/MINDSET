@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private ProgressDialog progressDialog;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class SignInActivity extends AppCompatActivity {
         final EditText passwordET = findViewById(R.id.passwordET);
         final Button loginBTN = findViewById(R.id.loginBTN);
         final TextView signupTV = findViewById(R.id.switchToSignup);
+
 
         //Connect to DB
         mAuth = FirebaseAuth.getInstance();
@@ -75,4 +78,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 }

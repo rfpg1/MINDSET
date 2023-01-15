@@ -5,65 +5,103 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FD701C"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".SignInActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signinTV"
-        android:text="Sign in"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        android:layout_margin="50dp"
-        android:textAlignment="center" />
-
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/usernameET"
-        android:layout_below="@+id/signinTV"
-        android:hint="Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="242dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_person_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/email"
+        android:padding="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:layout_margin="10dp"
-        android:padding="20dp" />
+        android:textColorHint="@color/white"
+        tools:ignore="TextContrastCheck" />
 
 
     <EditText
+        android:id="@+id/passwordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/passwordET"
         android:layout_below="@+id/usernameET"
-        android:hint="Password"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_lock_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:layout_margin="10dp"
-        android:padding="20dp" />
+        android:padding="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/white" />
+
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/loginBTN"
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/passwordET"
-        android:text="LOGIN"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:padding="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/sign_in"
+        android:textColor="@color/orange"
+        app:cornerRadius="10dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switchToSignup"
         android:layout_below="@+id/loginBTN"
-        android:text="Don't have an account?"
-        android:textColor="@color/black"
+        android:text="Don't have an account? Sign Up"
+        android:textColor="@color/white"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="342dp"
+        android:layout_height="492dp"
+        android:layout_above="@+id/passwordET"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="-9dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="-60dp"
+        android:contentDescription="@string/todo"
+        app:srcCompat="@drawable/logotipo"
+        tools:ignore="ImageContrastCheck" />
+
+
+
 </RelativeLayout>
