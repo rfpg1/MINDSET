@@ -1,16 +1,13 @@
 package com.application.MindSet.database;
 
 import android.util.Log;
-
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private
 
     static List<String> getUsers() {
         List<String> names = new ArrayList<>();

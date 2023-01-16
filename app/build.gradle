@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.application.MindSet"
-        minSdk 24
+        minSdk 29
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -54,4 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation "androidx.core:core:$core_version"
+    implementation "androidx.work:work-runtime:2.7.1"
+    implementation "androidx.concurrent:concurrent-listenablefuture-callback:1.0.0-beta01"
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 }

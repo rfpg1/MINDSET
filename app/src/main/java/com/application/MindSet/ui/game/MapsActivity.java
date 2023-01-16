@@ -66,7 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 Intent backToCreate = new Intent();
-                backToCreate.putExtra("location", local.toString());
+                backToCreate.putExtra("location", local);
                 setResult(RESULT_OK, backToCreate);
                 finish();
             }
@@ -119,7 +119,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
 
-        final Location[] res = new Location[1];
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationCallback locationCallback = new LocationCallback() {

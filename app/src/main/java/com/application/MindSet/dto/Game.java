@@ -1,18 +1,20 @@
 package com.application.MindSet.dto;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 public class Game implements Serializable {
 
-    private final String ownerID;
-    private final String sport;
-    private final Date date;
-    private final String local;
-    private final List<String> participantsID;
+    private String ownerID;
+    private String sport;
+    private Date date;
+    private LatLng local;
+    private List<String> participantsID;
 
-    public Game(String ownerID, String sport, Date date, String local, List<String> participantsID){
+    public Game(String ownerID, String sport, Date date, LatLng local, List<String> participantsID){
         this.ownerID = ownerID;
         this.sport = sport;
         this.date = date;
@@ -38,7 +40,7 @@ public class Game implements Serializable {
         return date;
     }
 
-    public String getLocal() {
+    public LatLng getLocal() {
         return local;
     }
 

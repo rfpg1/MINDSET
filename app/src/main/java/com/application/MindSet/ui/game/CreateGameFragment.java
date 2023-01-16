@@ -1,9 +1,7 @@
 package com.application.MindSet.ui.game;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +12,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import com.application.MindSet.dto.Game;
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentCreateGameBinding;
-import com.application.MindSet.notification.Notification;
+import com.application.MindSet.dto.Game;
+import com.application.MindSet.location.LocationService;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +41,8 @@ public class CreateGameFragment extends Fragment {
     private AddPlayersFragment addPFrag;
     private Button dateBTN, localBTN, createBTN;
     private MaterialCardView addPlayerBTN;
-    private String sport, dateDTO, local;
+    private String sport, dateDTO;
+    private LatLng local;
     private Date date;
     private LinearLayout playerInGame;
     private final static int REQUEST_CODE = 101;
@@ -57,7 +55,7 @@ public class CreateGameFragment extends Fragment {
                 if (resultCode == -1) {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
-                        local = extras.getString("location");
+                        local = (LatLng) extras.get("location");
                     }
                 }
         }
@@ -73,7 +71,7 @@ public class CreateGameFragment extends Fragment {
             dateBTN.setText(dateDTO);
         }
         if (local != null) {
-            localBTN.setText(local);
+            localBTN.setText(local.toString());
         }
     }
 
@@ -160,7 +158,10 @@ public class CreateGameFragment extends Fragment {
                 db.collection("Games").add(g).addOnSuccessListener(documentReference -> {
                     Toast.makeText(getActivity(), "Game created", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
-                    createNotificationForGame();
+
+                    double latitude = local.latitude;
+                    double longitude = local.longitude;
+                    createNotificationForGame(new LatLng(latitude, longitude), g);
                 });
             } else {
                 Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
@@ -170,19 +171,11 @@ public class CreateGameFragment extends Fragment {
         return root;
     }
 
-    private void createNotificationForGame() {
-        Intent intent = new Intent(getActivity(), Notification.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        long now = System.currentTimeMillis();
-
-        long tenSecs = 1000 * 10;
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                now + tenSecs,
-                pendingIntent);
+    private void createNotificationForGame(LatLng l, Game g) {
+        Intent intent = new Intent(getContext(), LocationService.class);
+        intent.putExtra("Location", l);
+        intent.putExtra("Date", g.getDate());
+        getActivity().startService(intent);
     }
 
 
