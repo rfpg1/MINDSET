@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.application.MindSet.ui.dashboard.DashboardFragment"
+        android:name="com.application.MindSet.ui.dashboard.MyGamesFragment"
         android:label="@string/title_torneio"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_my_games" />
 
     <fragment
         android:id="@+id/navigation_notifications"

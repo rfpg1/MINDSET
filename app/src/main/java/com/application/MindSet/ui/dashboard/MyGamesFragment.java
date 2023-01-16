@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.application.MindSet.databinding.FragmentDashboardBinding;
 
-public class DashboardFragment extends Fragment {
+public class MyGamesFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
 
