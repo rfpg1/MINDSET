@@ -175,7 +175,7 @@ public class CreateGameFragment extends Fragment {
         Intent intent = new Intent(getContext(), LocationService.class);
         intent.putExtra("Location", l);
         intent.putExtra("Date", g.getDate());
-        getActivity().startService(intent);
+        new LocationService(intent, getContext());
     }
 
 
