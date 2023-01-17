@@ -34,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private static Context context;
     //TODO ask for permissions
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    private final String[] REQUEST_PERMISSIONS = {
+            Manifest.permission.SCHEDULE_EXACT_ALARM,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,49 +69,20 @@ public class MainActivity extends AppCompatActivity {
         askForPermissions();
     }
 
-    public static void createNotificationChannel() {
-        Log.i("LocationUpdate", "Inside create channel");
-        CharSequence name = "NotificationChannel";
-        String description = "Channel for game notifications";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(NotificationBroadCast.CHANNEL_ID, name, importance);
-        channel.setDescription(description);
-
-        NotificationManager manager = context.getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(channel);
-        Log.i("LocationUpdate", "Leaving create channel");
-    }
-
     private void askForPermissions() {
-        if(ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.SCHEDULE_EXACT_ALARM)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
-                    REQUEST_CODE_LOCATION_PERMISSION);
+        for(String permission : REQUEST_PERMISSIONS)  {
+            if(ContextCompat.checkSelfPermission(getApplicationContext(),
+                    permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{permission},
+                        REQUEST_CODE_LOCATION_PERMISSION);
+            }
         }
     }
 
     public static Context getContext(){
         return context;
-    }
-
-    public static void showNotification(int duration) {
-        Log.i("LocationUpdate", "Sending notification");
-        Intent intent = new Intent(context, NotificationBroadCast.class);
-        intent.putExtra("duration", duration);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long now = System.currentTimeMillis();
-
-        long tenSecs = 1000 * 10;
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                now + tenSecs,
-                pendingIntent);
-        Log.i("LocationUpdate", "Notification sent");
     }
 
     @Override
