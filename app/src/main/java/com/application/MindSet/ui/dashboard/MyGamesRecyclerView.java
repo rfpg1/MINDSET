@@ -3,6 +3,7 @@ package com.application.MindSet.ui.dashboard;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,13 @@ import com.application.MindSet.R;
 import com.application.MindSet.dto.Game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerView.MyViewHolder> {
 
-    private ArrayList<Game> myGamesList;
+    private HashMap<Game, Boolean> myGamesList;
 
-    public MyGamesRecyclerView(ArrayList<Game> gamesList) {
+    public MyGamesRecyclerView(HashMap<Game, Boolean> gamesList) {
         this.myGamesList = gamesList;
     }
 
@@ -27,6 +29,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
         private TextView date;
         private TextView longitude;
         private TextView latitude;
+        private ImageView star;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -34,6 +37,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
             longitude = itemView.findViewById(R.id.longitude);
             date = itemView.findViewById(R.id.date);
             sport = itemView.findViewById(R.id.sport);
+            star = itemView.findViewById(R.id.star);
         }
     }
 
@@ -46,17 +50,24 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        double latitude = myGamesList.get(position).getLatitude();
+        Game g = (Game) myGamesList.keySet().toArray()[position];;
+        double latitude = g.getLatitude();
         holder.latitude.setText(latitude + "");
 
-        double longitude = myGamesList.get(position).getLongitude();
+        double longitude = g.getLongitude();
         holder.longitude.setText(longitude + "");
 
-        String date = myGamesList.get(position).getDate().toString();
+        String date = g.getDate().toString();
         holder.date.setText(date);
 
-        String sport = myGamesList.get(position).getSport();
+        String sport = g.getSport();
         holder.sport.setText(sport);
+
+       if(myGamesList.get(g)){
+           holder.star.setVisibility(View.VISIBLE);
+       } else {
+           holder.star.setVisibility(View.INVISIBLE);
+       }
     }
 
     @Override

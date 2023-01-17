@@ -23,11 +23,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class MyGamesFragment extends Fragment {
 
-    private ArrayList<Game> gamesList = new ArrayList<>();
+    private HashMap<Game, Boolean> gamesList = new HashMap<>();
 
     private FragmentMyGamesBinding binding;
     private RecyclerView view;
@@ -53,21 +54,24 @@ public class MyGamesFragment extends Fragment {
 
     private void setGames() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Games").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                    Game g = queryDocumentSnapshot.toObject(Game.class);
-                    Log.i("Games", g.toString());
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser mUser = mAuth.getCurrentUser();
-                    String uID = mUser.getUid();
-                    if(uID.equals(g.getOwnerID())) {
-                        gamesList.add(g);
+        db.collection("Games").get().addOnCompleteListener(task -> {
+            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                Game g = queryDocumentSnapshot.toObject(Game.class);
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser mUser = mAuth.getCurrentUser();
+                String uID = mUser.getUid();
+
+                if(uID.equals(g.getOwnerID())) {
+                    gamesList.put(g, true);
+                } else {
+                    List<String> participants = g.getParticipantsID();
+                    if(participants.contains(uID)) {
+                        gamesList.put(g, false);
                     }
                 }
-                setAdapter();
             }
+            setAdapter();
         });
     }
 
