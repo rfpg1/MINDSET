@@ -1,24 +1,13 @@
 package com.application.MindSet.ui.profile;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.application.MindSet.MainActivity;
-import com.application.MindSet.R;
-import com.application.MindSet.SignUpActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.application.MindSet.ToolBar;
-import com.application.MindSet.databinding.ActivityMainBinding;
 import com.application.MindSet.databinding.ActivityProfileBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private EditText nameET, surnameET;
     private Button saveBtn;
+    private Button cancelBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         nameET = binding.nameET;
         surnameET = binding.surnameET;
         saveBtn = binding.saveBTN;
+        cancelBTN = binding.cancelBTN;
 
         db.collection("Profiles").document(id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -82,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(ProfileActivity.this, "Information saved", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                                finish(); //Para voltar para a atividade anterior e não ir parar ao feed sempre
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -92,5 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
                         });
             }
         });
+
+        cancelBTN.setOnClickListener(view -> finish());
     }
 }
