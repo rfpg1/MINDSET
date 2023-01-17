@@ -16,6 +16,9 @@ public class Game implements Serializable {
     private double longitude;
     private List<String> participantsID;
 
+    public Game() {
+    }
+
     public Game(String ownerID, String sport, Date date, LatLng local, List<String> participantsID){
         this.ownerID = ownerID;
         this.sport = sport;

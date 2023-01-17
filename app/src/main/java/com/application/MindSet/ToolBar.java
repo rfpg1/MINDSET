@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.ActionBar;
 
-import com.application.MindSet.ui.message.MessageActivity;
+import com.application.MindSet.ui.message.AllMessagesActivity;
 import com.application.MindSet.ui.profile.ProfileActivity;
 
 public class ToolBar {
@@ -27,8 +27,8 @@ public class ToolBar {
         });
         ImageButton message = mCustomView.findViewById(R.id.message);
         message.setOnClickListener(view -> {
-            if(!(activity instanceof MessageActivity)){
-                activity.startActivity(new Intent(activity.getApplicationContext(), MessageActivity.class));
+            if(!(activity instanceof AllMessagesActivity)){
+                activity.startActivity(new Intent(activity.getApplicationContext(), AllMessagesActivity.class));
             }
         });
     }

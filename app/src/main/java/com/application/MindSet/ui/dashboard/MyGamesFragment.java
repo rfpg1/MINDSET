@@ -1,7 +1,6 @@
 package com.application.MindSet.ui.dashboard;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.application.MindSet.databinding.FragmentMyGamesBinding;
 import com.application.MindSet.dto.Game;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 public class MyGamesFragment extends Fragment {
 
-    private HashMap<Game, Boolean> gamesList = new HashMap<>();
+    private HashMap<Game, Boolean> gamesList;
 
     private FragmentMyGamesBinding binding;
     private RecyclerView view;
@@ -39,6 +31,7 @@ public class MyGamesFragment extends Fragment {
         binding = FragmentMyGamesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         view = binding.view;
+        gamesList = new HashMap<>();
         setGames();
 
         return root;

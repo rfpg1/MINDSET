@@ -45,7 +45,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ui.message.MessageActivity"
+            android:name=".ui.message.AllMessagesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -87,6 +87,14 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".ui.message.MessageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
