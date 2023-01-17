@@ -2,6 +2,7 @@ package com.application.MindSet.ui.game;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +30,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import org.intellij.lang.annotations.JdkConstants;
+
 import java.sql.Date;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -39,12 +46,13 @@ public class CreateGameFragment extends Fragment {
 
     private FragmentCreateGameBinding binding;
     private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
     private AddPlayersFragment addPFrag;
-    private Button dateBTN, localBTN, createBTN;
-    private MaterialCardView addPlayerBTN;
+    private Button dateBTN, timeBTN, localBTN, createBTN;
+    private ImageView addPlayerBTN;
     private String sport, dateDTO;
     private LatLng local;
-    private Date date;
+    private Calendar date = Calendar.getInstance();
     private LinearLayout playerInGame;
     private final static int REQUEST_CODE = 101;
 
@@ -88,9 +96,14 @@ public class CreateGameFragment extends Fragment {
         binding.autoCompleteSelectSport.setOnItemClickListener((parent, view, position, id) -> {
             sport = arrayAdapter.getItem(position);
         });
+
         initDatePicker(getContext());
         dateBTN = binding.dateBTN;
         dateBTN.setOnClickListener(view -> datePickerDialog.show());
+
+        initTimePicker(getContext());
+        timeBTN = binding.timeBTN;
+        timeBTN.setOnClickListener(view -> timePickerDialog.show());
 
         localBTN = binding.localBTN;
         localBTN.setOnClickListener(view -> {
@@ -109,7 +122,7 @@ public class CreateGameFragment extends Fragment {
                     List<String> namesInGame = new ArrayList<>();
                     for (int i = 0; i < playerInGame.getChildCount(); i++) {
                         View v = playerInGame.getChildAt(i);
-                        namesInGame.add((String) v.getTag());
+                        namesInGame.add((String) v.getTag(R.string.playerId));
                     }
                     //Array com todos os nomes que temos na BD que podem ser convidados
                     List<String> names = new ArrayList<>();
@@ -154,7 +167,7 @@ public class CreateGameFragment extends Fragment {
                     playersIDs = this.addPFrag.getPlayersInGameIDs();
                 else
                     playersIDs = new ArrayList<>();
-                Game g = new Game(uID, sport, date, local, playersIDs);
+                Game g = new Game(uID, sport, date.getTime(), local, playersIDs);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Games").add(g).addOnSuccessListener(documentReference -> {
                     Toast.makeText(getActivity(), "Game created", Toast.LENGTH_SHORT).show();
@@ -179,12 +192,31 @@ public class CreateGameFragment extends Fragment {
         new LocationService(intent, getContext());
     }
 
+    private void initTimePicker(Context context) {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                String timeDTO = i + " : " + i1;
+                date.set(Calendar.HOUR_OF_DAY, i);
+                date.set(Calendar.MINUTE, i1);
+                timeBTN.setText(timeDTO);
+            }
+        };
+        Calendar cal = Calendar.getInstance();
+
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        timePickerDialog = new TimePickerDialog(context, style, timeSetListener, hour, minute, android.text.format.DateFormat.is24HourFormat(context));
+    }
 
     private void initDatePicker(Context context) {
 
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
             month += 1;
-            date = Date.valueOf(year + "-" + month + "-" + day);
+            date.set(year , month, day);
             dateDTO = day + " " + getMonthFormat(month) + " " + year;
             dateBTN.setText(dateDTO);
         };

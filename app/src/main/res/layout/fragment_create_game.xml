@@ -23,7 +23,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_toRightOf="@id/sportTV"
         android:layout_alignBaseline="@id/sportTV"
-        android:layout_marginRight="32dp">
+        android:layout_marginRight="32dp"
+        app:boxBackgroundColor="@color/orange">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
@@ -53,6 +54,31 @@
         android:layout_alignBaseline="@id/dateTV"
         android:layout_alignLeft="@id/selectSport"
         android:layout_marginRight="32dp"
+        android:backgroundTint="@color/orange"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeTV"
+        android:text="Time"
+        android:textSize="18dp"
+        android:layout_margin="32dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/dateTV"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeBTN"
+        android:text="Select Time"
+        android:layout_toRightOf="@id/timeTV"
+        android:layout_alignBaseline="@id/timeTV"
+        android:layout_alignLeft="@id/dateBTN"
+        android:layout_marginRight="32dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
         />
 
     <TextView
@@ -63,7 +89,7 @@
         android:textSize="18dp"
         android:layout_margin="32dp"
         android:textColor="@color/black"
-        android:layout_below="@id/dateTV"/>
+        android:layout_below="@id/timeTV"/>
 
     <Button
         android:layout_width="match_parent"
@@ -74,6 +100,8 @@
         android:layout_alignBaseline="@id/localTV"
         android:layout_alignLeft="@id/dateBTN"
         android:layout_marginRight="32dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
         />
 
     <TextView
@@ -100,19 +128,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
+            <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                app:cardBackgroundColor="@color/orange"
+                android:background="@drawable/round_corners_orange"
                 android:id="@+id/addPlayerBTN"
-                android:onClick="addPlayer">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_baseline_add_24">
-                    </ImageView>
-            </com.google.android.material.card.MaterialCardView>
+                android:onClick="addPlayer"
+                android:elevation="5dp"
+                android:src="@drawable/ic_baseline_add_24">
+            </ImageView>
+
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -122,7 +148,8 @@
         android:id="@+id/createBTN"
         android:layout_below="@id/playersHSV"
         android:layout_alignRight="@id/playersHSV"
-        android:layout_marginRight="32dp"
+        android:backgroundTint="@color/orange"
+        android:textColor="@color/black"
         android:text="CREATE"/>
 
 </RelativeLayout>

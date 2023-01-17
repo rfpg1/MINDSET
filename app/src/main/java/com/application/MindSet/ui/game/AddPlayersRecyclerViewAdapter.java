@@ -1,6 +1,9 @@
 package com.application.MindSet.ui.game;
 
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
@@ -17,9 +20,12 @@ import java.util.List;
 
 public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlayersRecyclerViewAdapter.MyViewHolder> {
 
+    //players that can be invited
     private List<String> playersIDs;
     private LinearLayout hsv;
+    //names of players that can be invited
     private List<String> names;
+    //ids of players that are invited
     private List<String> playersInGameIDs;
 
     public AddPlayersRecyclerViewAdapter(List<String> playersList, LinearLayout hsv, List<String> playersIDs) {
@@ -33,7 +39,7 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_add_players_item, parent, false);
-        return new AddPlayersRecyclerViewAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView).linkAdapter(this);
     }
 
     @Override
@@ -41,23 +47,34 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
         holder.username.setText(names.get(position));
         holder.profilePic.setImageResource(R.drawable.border_round_corners);
         holder.profilePic.setOnClickListener(v -> {
-            //Remover o nome e a imagem dos seus pais para os meter noutros pais
-            ViewManager parent = (ViewManager) holder.playerLayout.getParent();
-            parent.removeView(holder.playerLayout);
-            //Adicionar uma tag que vai ser o ID do jogador adicionar
-            holder.playerLayout.setTag(playersIDs.get(position));
-            //Meter nos novos mais
-            hsv.addView(holder.playerLayout);
-            //Remover para não continuar a aparecer no recycler view
+
+            ImageView img = new ImageView(hsv.getContext());
+            final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
+            int oneHunDP = (int) (100 * scale);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
+            int fiveDP = (int) (5 * scale);
+            params.setMargins(fiveDP,fiveDP,fiveDP,fiveDP);
+            img.setImageResource(R.drawable.ic_outline_person_24);
+            img.setBackgroundResource(R.drawable.round_corners_orange);
+            img.setLayoutParams(params);
+            img.setTag(R.string.playerId, playersIDs.get(position));
+            img.setTag(R.string.playerName, names.get(position));
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hsv.removeView(view);
+                }
+            });
+            hsv.addView(img);
+            playersIDs.remove(position);
             names.remove(position);
-            //Adicionar como jogador já no jogo
-            playersInGameIDs.add(playersIDs.get(position));
+            ((ViewManager) holder.playerLayout.getParent()).removeView(holder.playerLayout);
         });
     }
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return playersIDs.size();
     }
 
     public List<String> getPlayersInGameIDs() {
@@ -69,12 +86,18 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
         private RelativeLayout playerLayout;
         private ImageView profilePic;
         private TextView username;
+        private AddPlayersRecyclerViewAdapter adapter;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username_add);
             profilePic = itemView.findViewById(R.id.user_profile_pic);
             playerLayout = itemView.findViewById(R.id.layoutPlayer);
+        }
+
+        private MyViewHolder linkAdapter(AddPlayersRecyclerViewAdapter adapter) {
+            this.adapter = adapter;
+            return this;
         }
     }
 }

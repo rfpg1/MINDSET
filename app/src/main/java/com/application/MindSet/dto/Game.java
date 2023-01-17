@@ -3,6 +3,7 @@ package com.application.MindSet.dto;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +15,6 @@ public class Game implements Serializable {
     private double latitude;
     private double longitude;
     private List<String> participantsID;
-
-    //DATABASE IS NECESSARY
-    public Game(){
-
-    }
 
     public Game(String ownerID, String sport, Date date, LatLng local, List<String> participantsID){
         this.ownerID = ownerID;

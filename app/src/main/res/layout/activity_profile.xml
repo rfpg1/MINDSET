@@ -20,7 +20,7 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_outline_person_24"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bgimage" />
+        app:srcCompat="@drawable/bgimage"/>
 
     <EditText
         android:id="@+id/nameET"

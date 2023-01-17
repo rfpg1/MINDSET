@@ -48,4 +48,6 @@
     <string name="sign_in">SIGN IN</string>
     <string name="email">Email</string>
     <string name="todo">TODO</string>
+    <string name="playerId"></string>
+    <string name="playerName"></string>
 </resources>
