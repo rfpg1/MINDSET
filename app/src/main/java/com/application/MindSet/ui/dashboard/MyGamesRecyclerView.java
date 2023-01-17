@@ -9,50 +9,59 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.R;
-import com.application.MindSet.dto.Feed;
 import com.application.MindSet.dto.Game;
-import com.google.android.gms.maps.model.LatLng;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MyGamesRecylerView extends RecyclerView.Adapter<MyGamesRecylerView.MyViewHolder> {
+public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerView.MyViewHolder> {
 
     private ArrayList<Game> myGamesList;
 
-    public MyGamesRecylerView() {
-
+    public MyGamesRecyclerView(ArrayList<Game> gamesList) {
+        this.myGamesList = gamesList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView sport;
         private TextView date;
-        private TextView local;
+        private TextView longitude;
+        private TextView latitude;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            local = itemView.findViewById(R.id.local_fill);
-            date = itemView.findViewById(R.id.date_fill);
+            latitude = itemView.findViewById(R.id.latitude);
+            longitude = itemView.findViewById(R.id.longitude);
+            date = itemView.findViewById(R.id.date);
+            sport = itemView.findViewById(R.id.sport);
         }
     }
 
     @NonNull
     @Override
-    public MyGamesRecylerView.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_feed_list_item, parent, false);
-        return new MyGamesRecylerView.MyViewHolder(itemView);
+    public MyGamesRecyclerView.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_my_games_list_item, parent, false);
+        return new MyGamesRecyclerView.MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        double latitude = myGamesList.get(position).getLatitude();
+        holder.latitude.setText(latitude + "");
 
+        double longitude = myGamesList.get(position).getLongitude();
+        holder.longitude.setText(longitude + "");
+
+        String date = myGamesList.get(position).getDate().toString();
+        holder.date.setText(date);
+
+        String sport = myGamesList.get(position).getSport();
+        holder.sport.setText(sport);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return myGamesList.size();
     }
 
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.databinding.FragmentFeedBinding;
+import com.application.MindSet.dto.Feed;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void setFeed() {
+        feedList = new ArrayList<>();
         feedList.add(new Feed("Ricardo", "CG", "10/11/2022", "2/3"));
         feedList.add(new Feed("Gonçalo", "CG", "11/11/2022", "2/3"));
         feedList.add(new Feed("Rafael", "CG", "12/11/2022", "2/3"));
