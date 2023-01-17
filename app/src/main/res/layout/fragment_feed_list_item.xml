@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/radius"
     android:layout_width="match_parent"
-    android:layout_height="75dp">
+    android:layout_height="95dp"
+    android:background="@drawable/bgitem">
 
     <ImageView
         android:id="@id/icon"
@@ -12,44 +13,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="32dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
         app:srcCompat="@drawable/ic_android_black_24dp" />
 
     <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/icon"
-        android:layout_toRightOf="@id/icon" />
-
-    <TextView
-        android:id="@+id/local"
+        android:id="@+id/players_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="208dp"
-        android:layout_marginLeft="185dp"
-        android:layout_marginBottom="16dp"
-        android:layout_toEndOf="@+id/players_fill"
-        android:layout_toRightOf="@id/icon" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="166dp"
-        android:layout_marginLeft="185dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/username_fill"
-        android:layout_toRightOf="@id/icon" />
-
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="25dp"
+        android:layout_toEndOf="@+id/players"
+        android:layout_toRightOf="@id/players" />
 
     <TextView
         android:id="@+id/players"
@@ -57,11 +36,42 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="29dp"
         android:layout_marginLeft="-27dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_toRightOf="@id/icon"
         android:text="Jogadores: " />
+
+    <TextView
+        android:id="@+id/date_fill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/date"
+        android:layout_toRightOf="@id/date" />
+
+    <TextView
+        android:id="@+id/local_fill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginBottom="26dp"
+        android:layout_toEndOf="@+id/local"
+        android:layout_toRightOf="@id/local" />
+
+    <TextView
+        android:id="@+id/local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="160dp"
+        android:layout_marginBottom="26dp"
+        android:layout_toRightOf="@id/icon" />
 
     <TextView
         android:id="@+id/username_fill"
@@ -70,49 +80,31 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="7dp"
         android:layout_marginLeft="7dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/username"
         android:layout_toRightOf="@id/username" />
 
     <TextView
-        android:id="@+id/local_fill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="31dp"
-        android:layout_marginEnd="79dp"
-        android:layout_marginBottom="16dp"
-        android:layout_toRightOf="@id/local" />
-
-    <TextView
-        android:id="@+id/date_fill"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="177dp"
-        android:layout_toRightOf="@id/date" />
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="111dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/username_fill"
+        android:layout_toRightOf="@id/icon" />
 
     <TextView
-        android:id="@+id/players_fill"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginBottom="16dp"
-        android:layout_toEndOf="@+id/players"
-        android:layout_toRightOf="@id/players" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="401dp"
-        android:layout_height="64dp"
-        android:layout_centerInParent="true"
-        app:srcCompat="@drawable/custom_input_profile" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_toRightOf="@id/icon" />
 
 
 </RelativeLayout>
