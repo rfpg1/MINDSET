@@ -2,85 +2,117 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/radius"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="75dp">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="80dp"
         android:id="@id/icon"
-        app:srcCompat="@drawable/ic_android_black_24dp"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        app:srcCompat="@drawable/ic_android_black_24dp" />
+
+    <TextView
         android:id="@+id/username"
-        android:text="Username"
-        android:layout_toRightOf="@id/icon"
-        android:layout_marginLeft="5dp"
-        />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_toRightOf="@id/icon" />
+
+    <TextView
         android:id="@+id/local"
-        android:text="Local"
-        android:layout_toRightOf="@id/icon"
-        android:layout_below="@id/username"
-        android:layout_marginLeft="5dp"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="208dp"
+        android:layout_marginLeft="185dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/players_fill"
+        android:layout_toRightOf="@id/icon" />
+
+    <TextView
         android:id="@+id/date"
-        android:text="Date"
-        android:layout_toRightOf="@id/icon"
-        android:layout_below="@id/local"
-        android:layout_marginLeft="5dp"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="166dp"
+        android:layout_marginLeft="185dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/username_fill"
+        android:layout_toRightOf="@id/icon" />
+
+
+    <TextView
         android:id="@+id/players"
-        android:text="Players"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="-27dp"
+        android:layout_marginTop="40dp"
         android:layout_toRightOf="@id/icon"
-        android:layout_below="@id/date"
-        android:layout_marginLeft="5dp"/>
+        android:text="Jogadores: " />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/username_fill"
-        android:layout_toRightOf="@id/username"
-        android:layout_alignTop="@id/username"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/username"
+        android:layout_toRightOf="@id/username" />
+
+    <TextView
         android:id="@+id/local_fill"
-        android:layout_toRightOf="@id/local"
-        android:layout_alignTop="@id/local"
-        android:layout_marginLeft="10dp"/>
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="31dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@id/local" />
+
+    <TextView
         android:id="@+id/date_fill"
-        android:layout_toRightOf="@id/date"
-        android:layout_alignTop="@id/date"
-        android:layout_marginLeft="10dp"/>
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="177dp"
+        android:layout_toRightOf="@id/date" />
+
+    <TextView
         android:id="@+id/players_fill"
-        android:layout_toRightOf="@id/players"
-        android:layout_alignTop="@id/players"
-        android:layout_marginLeft="10dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/players"
+        android:layout_toRightOf="@id/players" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="401dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/custom_input_profile" />
 
 
 </RelativeLayout>
