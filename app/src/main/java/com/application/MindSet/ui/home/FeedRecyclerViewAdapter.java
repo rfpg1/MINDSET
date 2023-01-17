@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.R;
+import com.application.MindSet.dto.Feed;
 
 import java.util.ArrayList;
 

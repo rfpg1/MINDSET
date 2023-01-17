@@ -30,9 +30,9 @@ public class Direction {
         return INSTANCE;
     }
 
-    public static void distanceBetweenTwoCoordinates(LatLng c1, LatLng c2, String howToGo, int timeMax) {
+    public static void distanceBetweenTwoCoordinates(LatLng c1, LatLng c2, String mode) {
 
-        String url = getUrl(c1, c2, howToGo);
+        String url = getUrl(c1, c2, mode);
         Log.i("ResponseDirection", url);
 
         OkHttpClient client = new OkHttpClient();
@@ -50,7 +50,6 @@ public class Direction {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String s = response.body().string();
-                done = true;
                 try {
                     JSONObject jObject = new JSONObject(s);
                     String distance = (String) jObject.getJSONArray("routes").getJSONObject(0)
@@ -65,6 +64,7 @@ public class Direction {
                     Log.i("ResponseDirection", duration);
 
                     responseBody = new Pair<>(distance, duration);
+                    done = true;
                 } catch (JSONException e) {
                     Log.i("ResponseDirection" , e.getMessage());
                 }
@@ -72,12 +72,12 @@ public class Direction {
         });
     }
 
-    private static String getUrl(LatLng c1, LatLng c2, String howToGo) {
+    private static String getUrl(LatLng c1, LatLng c2, String mode) {
         String bob = GOOGLE_MAPS_API_URL + "origin=" + c1.latitude + "," + c1.longitude +
                 "&destination=" + c2.latitude + "," + c2.longitude +
-                "&mode=" + howToGo +
+                "&mode=" + mode +
                 "&key=" + API_KEY;
-
+        Log.i("LocationUpdate", bob);
         return bob;
     }
 
@@ -87,5 +87,9 @@ public class Direction {
 
     public Pair<String, String> getResponseBody() {
         return responseBody;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

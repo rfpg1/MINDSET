@@ -1,4 +1,4 @@
-package com.application.MindSet.ui.home;
+package com.application.MindSet.dto;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

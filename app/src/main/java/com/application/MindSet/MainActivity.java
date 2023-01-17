@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -34,6 +36,20 @@ public class MainActivity extends AppCompatActivity {
     private static Context context;
     //TODO ask for permissions
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    private final String[] REQUEST_PERMISSIONS = {
+            Manifest.permission.SCHEDULE_EXACT_ALARM,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private final int[] REQUEST_PERMISSIONS_CODES = {
+            0,
+            1,
+            2,
+            3,
+            4
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,49 +77,37 @@ public class MainActivity extends AppCompatActivity {
         askForPermissions();
     }
 
-    public static void createNotificationChannel() {
-        Log.i("LocationUpdate", "Inside create channel");
-        CharSequence name = "NotificationChannel";
-        String description = "Channel for game notifications";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(NotificationBroadCast.CHANNEL_ID, name, importance);
-        channel.setDescription(description);
-
-        NotificationManager manager = context.getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(channel);
-        Log.i("LocationUpdate", "Leaving create channel");
+    private void askForPermissions() {
+        for(int i = 0; i < REQUEST_PERMISSIONS.length; i++) {
+            if(ContextCompat.checkSelfPermission(getApplicationContext(),
+                    REQUEST_PERMISSIONS[i])
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{REQUEST_PERMISSIONS[i]},
+                        REQUEST_PERMISSIONS_CODES[i]);
+            }
+        }
     }
 
-    private void askForPermissions() {
-        if(ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.SCHEDULE_EXACT_ALARM)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
-                    REQUEST_CODE_LOCATION_PERMISSION);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 4:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(ContextCompat.checkSelfPermission(getApplicationContext(),
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                                0);
+                    }
+                }
         }
     }
 
     public static Context getContext(){
         return context;
-    }
-
-    public static void showNotification(int duration) {
-        Log.i("LocationUpdate", "Sending notification");
-        Intent intent = new Intent(context, NotificationBroadCast.class);
-        intent.putExtra("duration", duration);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long now = System.currentTimeMillis();
-
-        long tenSecs = 1000 * 10;
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                now + tenSecs,
-                pendingIntent);
-        Log.i("LocationUpdate", "Notification sent");
     }
 
     @Override

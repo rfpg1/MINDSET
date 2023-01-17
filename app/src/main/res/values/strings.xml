@@ -9,7 +9,7 @@
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_feed">Feed</string>
-    <string name="title_torneio">Torneios</string>
+    <string name="title_torneio">Jogos</string>
     <string name="title_criar_jogo">Criar Jogos</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_username">Username</string>

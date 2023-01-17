@@ -27,11 +27,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CreateGameFragment extends Fragment {
@@ -175,7 +176,7 @@ public class CreateGameFragment extends Fragment {
         Intent intent = new Intent(getContext(), LocationService.class);
         intent.putExtra("Location", l);
         intent.putExtra("Date", g.getDate());
-        getActivity().startService(intent);
+        new LocationService(intent, getContext());
     }
 
 

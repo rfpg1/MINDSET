@@ -1,7 +1,11 @@
 package com.application.MindSet;
 
+import static com.application.MindSet.MainActivity.getContext;
+
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +31,7 @@ public class SignInActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private ProgressDialog progressDialog;
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
 
     @Override
@@ -78,8 +85,4 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }
