@@ -1,14 +1,11 @@
 package com.application.MindSet.location;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.application.MindSet.direction.Direction;
 import com.application.MindSet.notification.NotificationBroadCast;
 import com.application.MindSet.utils.Pair;
@@ -19,8 +16,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.sql.Date;
+import java.util.Date;
 
 public class LocationService {
 
@@ -79,7 +75,6 @@ public class LocationService {
             response = l.getResponseBody();
 
             int duration = Utils.getDuration(response.getSecond());
-
             if(Utils.isGameIn(gameDate, duration)) {
                 showNotification(duration);
             }

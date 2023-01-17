@@ -24,22 +24,14 @@ import com.application.MindSet.databinding.FragmentCreateGameBinding;
 import com.application.MindSet.dto.Game;
 import com.application.MindSet.location.LocationService;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import org.intellij.lang.annotations.JdkConstants;
-
-import java.sql.Date;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CreateGameFragment extends Fragment {
@@ -216,7 +208,7 @@ public class CreateGameFragment extends Fragment {
 
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
             month += 1;
-            date.set(year , month, day);
+            date.set(year , month - 1, day);
             dateDTO = day + " " + getMonthFormat(month) + " " + year;
             dateBTN.setText(dateDTO);
         };

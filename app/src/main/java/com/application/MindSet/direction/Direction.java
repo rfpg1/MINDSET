@@ -33,7 +33,6 @@ public class Direction {
     public static void distanceBetweenTwoCoordinates(LatLng c1, LatLng c2, String mode) {
 
         String url = getUrl(c1, c2, mode);
-        Log.i("ResponseDirection", url);
 
         OkHttpClient client = new OkHttpClient();
 
@@ -59,9 +58,6 @@ public class Direction {
                     String duration = (String) jObject.getJSONArray("routes").getJSONObject(0)
                             .getJSONArray("legs").getJSONObject(0)
                             .getJSONObject("duration").get("text");
-
-                    Log.i("ResponseDirection", distance);
-                    Log.i("ResponseDirection", duration);
 
                     responseBody = new Pair<>(distance, duration);
                     done = true;

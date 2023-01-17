@@ -2,7 +2,7 @@ package com.application.MindSet.utils;
 
 import android.util.Log;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -13,9 +13,9 @@ public class Utils {
     public static boolean isGameIn(Date gameDate, int timeNeededToMove) {
 
         Calendar c = Calendar.getInstance();
-        Date sqlDate = new Date(c.getTimeInMillis() + (timeNeededToMove + REQUIRED_TIME) * 1000);
-
-        return sqlDate.after(gameDate);
+        c.add(Calendar.MINUTE, timeNeededToMove + REQUIRED_TIME);
+        Date d = new Date(c.getTimeInMillis());
+        return d.after(gameDate);
     }
 
     public static int getDuration(String second) {
