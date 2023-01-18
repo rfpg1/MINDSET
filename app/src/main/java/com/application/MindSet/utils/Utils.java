@@ -5,10 +5,19 @@ import android.util.Log;
 import java.util.Date;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class Utils {
 
     private static final int REQUIRED_TIME = 15;
+    public static HashMap<String, Integer> MAX_OF_EACH_GAME = new HashMap<>(){{
+        put("Volleyball", 12);
+        put("Rugby", 30);
+        put("Football", 22);
+        put("Tennis", 2);
+        put("Basketball", 10);
+        put("Boxing", 2);
+    }};
 
     public static boolean isGameIn(Date gameDate, int timeNeededToMove) {
 

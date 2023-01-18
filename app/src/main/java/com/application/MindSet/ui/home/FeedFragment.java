@@ -13,8 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.databinding.FragmentFeedBinding;
 import com.application.MindSet.dto.Feed;
+import com.application.MindSet.dto.Game;
+import com.application.MindSet.utils.Utils;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FeedFragment extends Fragment {
 
@@ -30,7 +41,7 @@ public class FeedFragment extends Fragment {
         View root = binding.getRoot();
         view = binding.view;
         setFeed();
-        setAdapter();
+        //setAdapter();
 
         return root;
     }
@@ -44,11 +55,26 @@ public class FeedFragment extends Fragment {
     }
 
     private void setFeed() {
-        feedList = new ArrayList<>();
-        feedList.add(new Feed("Ricardo", "CG", "10/11/2022", "2/3"));
-        feedList.add(new Feed("Gonçalo", "CG", "11/11/2022", "2/3"));
-        feedList.add(new Feed("Rafael", "CG", "12/11/2022", "2/3"));
-        feedList.add(new Feed("Madalena", "CG", "13/11/2022", "2/3"));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Games").get().addOnCompleteListener(task -> {
+            feedList = new ArrayList<>();
+            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                Game g = queryDocumentSnapshot.toObject(Game.class);
+                db.collection("Profiles").document(g.getOwnerID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        String name = documentSnapshot.get("name", String.class);
+                        Feed f = new Feed(name, new LatLng(g.getLatitude(), g.getLongitude()).toString(),
+                                g.getDate().toString(), g.getParticipantsID().size() + 1 + "/" +
+                                Utils.MAX_OF_EACH_GAME.get(g.getSport()));
+                        feedList.add(f);
+                        setAdapter();
+                    }
+                });
+            }
+
+        });
     }
 
     @Override
