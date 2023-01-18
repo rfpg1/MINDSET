@@ -3,7 +3,10 @@ package com.application.MindSet.ui.message;
 import static com.application.MindSet.MainActivity.getContext;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AllMessagesActivity extends AppCompatActivity {
 
@@ -26,6 +30,7 @@ public class AllMessagesActivity extends AppCompatActivity {
     private List<User> users;
     private RecyclerView view;
     private String sender;
+    private UserRecyclerView uAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,37 @@ public class AllMessagesActivity extends AppCompatActivity {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         sender = mUser.getUid();
 
+        EditText search = binding.searchBar;
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         Log.i("Name", sender);
         setUsers();
 
+    }
+
+    private void filter(String text) {
+        List<User> filteredList = new ArrayList<>();
+        for(User u : users) {
+            if(u.getName().toLowerCase().contains(text)){
+                filteredList.add(u);
+            }
+        }
+        uAdapter.filterList(filteredList);
     }
 
     private void setUsers() {
@@ -59,10 +92,10 @@ public class AllMessagesActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        UserRecyclerView adapter = new UserRecyclerView(users, getContext(), sender);
+        uAdapter = new UserRecyclerView(users, getContext(), sender);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         view.setLayoutManager(layoutManager);
         view.setItemAnimator(new DefaultItemAnimator());
-        view.setAdapter(adapter);
+        view.setAdapter(uAdapter);
     }
 }

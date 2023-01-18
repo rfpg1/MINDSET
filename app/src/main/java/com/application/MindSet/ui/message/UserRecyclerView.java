@@ -19,7 +19,7 @@ import java.util.List;
 public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.MyViewHolder> {
 
 
-    private final List<User> users;
+    private List<User> users;
     private final Context context;
     private final String sender;
 
@@ -27,6 +27,11 @@ public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.MyVi
         this.users = users;
         this.context = context;
         this.sender = sender;
+    }
+
+    public void filterList(List<User> filteredList) {
+        this.users = filteredList;
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
