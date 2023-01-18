@@ -101,8 +101,8 @@ public class FeedFragment extends Fragment {
                     db.collection("Profiles").document(g.getOwnerID()).get().addOnCompleteListener(task1 -> {
                         DocumentSnapshot documentSnapshot = task1.getResult();
                         String name = documentSnapshot.get("name", String.class);
-                        Feed f = new Feed(name, new LatLng(g.getLatitude(), g.getLongitude()).toString(),
-                                g.getDate(), g.getParticipantsID().size() + 1 + "/" +
+                        Feed f = new Feed(name, g.getLocalName(),
+                                Utils.getDateDTO(g.getDate()), g.getParticipantsID().size() + 1 + "/" +
                                 Utils.MAX_OF_EACH_GAME.get(g.getSport()));
                         feedList.add(f);
                         setAdapter();

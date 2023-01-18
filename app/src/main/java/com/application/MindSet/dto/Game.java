@@ -15,17 +15,19 @@ public class Game implements Serializable {
     private double latitude;
     private double longitude;
     private List<String> participantsID;
+    private String localName;
 
     public Game() {
     }
 
-    public Game(String ownerID, String sport, Date date, LatLng local, List<String> participantsID){
+    public Game(String ownerID, String sport, Date date, LatLng local, List<String> participantsID, String localName){
         this.ownerID = ownerID;
         this.sport = sport;
         this.date = date;
         this.latitude = local.latitude;
         this.longitude = local.longitude;
         this.participantsID = participantsID;
+        this.localName = localName;
     }
 
     public void addParticipant(String id){
@@ -60,6 +62,10 @@ public class Game implements Serializable {
 
     public boolean removeParticipant(String id){
         return participantsID.remove(id);
+    }
+
+    public String getLocalName() {
+        return localName;
     }
 
     @Override

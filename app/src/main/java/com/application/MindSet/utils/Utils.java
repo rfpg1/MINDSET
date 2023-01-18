@@ -2,6 +2,8 @@ package com.application.MindSet.utils;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -19,6 +21,10 @@ public class Utils {
         put("Boxing", 2);
     }};
 
+    public static HashMap <String, LatLng> PLACES = new HashMap<>() {{
+        put("Cidade Universitária", new LatLng(	38.7522222, -9.1586111));
+    }};
+
     public static boolean isGameIn(Date gameDate, int timeNeededToMove) {
 
         Calendar c = Calendar.getInstance();
@@ -28,7 +34,6 @@ public class Utils {
     }
 
     public static int getDuration(String second) {
-        //X mins || X hours and Y mins
         if(second.contains("hours")) {
             String[] duration = second.split("mins|hours");
             for (int i = 0; i <duration.length; i++) {

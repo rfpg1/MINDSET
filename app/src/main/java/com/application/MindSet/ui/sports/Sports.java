@@ -1,7 +1,11 @@
 package com.application.MindSet.ui.sports;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +22,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class Sports extends BottomSheetDialogFragment {
 
     private FragmentManager manager;
-    private MainActivity context;
+    private Context context;
     private static final Sports INSTANCE = new Sports(null, null);
 
-    private Sports(FragmentManager supportFragmentManager, MainActivity context) {
+    private Sports(FragmentManager supportFragmentManager, Context context) {
         this.manager = supportFragmentManager;
         this.context = context;
     }
@@ -34,7 +38,7 @@ public class Sports extends BottomSheetDialogFragment {
         this.manager = manager;
     }
 
-    public void setContext(MainActivity context){
+    public void setContext(Context context){
         this.context = context;
     }
 
@@ -92,6 +96,10 @@ public class Sports extends BottomSheetDialogFragment {
     }
 
     public void show() {
-        this.show(manager, "TAG");
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        String s = am.getAppTasks().get(0).getTaskInfo().topActivity.getClassName();
+
+        if(s.contains("MainActivity"))
+            this.show(manager, "TAG");
     }
 }

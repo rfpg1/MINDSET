@@ -1,21 +1,25 @@
 package com.application.MindSet.ui.game;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.ActivityMapsBinding;
+import com.application.MindSet.utils.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -25,24 +29,30 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private Button cancelBtn, chooseBtn;
     private LatLng local;
     private static final int REQUEST_CODE = 101;
+    private AutoCompleteTextView searchBar;
+    private static final float DEFAULT_ZOOM = 15f;
+    private Marker selectedMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        com.application.MindSet.databinding.ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getApplicationContext());
@@ -52,25 +62,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        cancelBtn = binding.cancelBTN;
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setResult(RESULT_CANCELED);
-                finish();
-            }
+        searchBar = binding.searchBar;
+        init();
+
+        Button cancelBtn = binding.cancelBTN;
+        cancelBtn.setOnClickListener(view -> {
+            setResult(RESULT_CANCELED);
+            finish();
         });
 
-        chooseBtn = binding.chooseBTN;
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backToCreate = new Intent();
-                backToCreate.putExtra("location", local);
-                setResult(RESULT_OK, backToCreate);
-                finish();
-            }
+        Button chooseBtn = binding.chooseBTN;
+        chooseBtn.setOnClickListener(view -> {
+            Intent backToCreate = new Intent();
+            backToCreate.putExtra("location", local);
+            backToCreate.putExtra("localName", selectedMarker.getTitle());
+            setResult(RESULT_OK, backToCreate);
+            finish();
         });
+    }
+
+    private void init() {
+
+        searchBar.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE
+                || keyEvent.getAction() == KeyEvent.ACTION_DOWN || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+                geoLocate();
+            }
+            return false;
+        });
+        hideSoftKeyboard();
+    }
+
+    private void geoLocate() {
+        String search = searchBar.getText().toString();
+        Log.i("AddressMaps", "GeoLocate");
+        Geocoder geoCoder = new Geocoder(MapsActivity.this);
+        List<Address> addressList = new ArrayList<>();
+        try{
+            addressList = geoCoder.getFromLocationName(search, 1);
+        } catch (IOException e){
+            Log.e("ERROR", e.getMessage());
+        }
+        if(addressList.size() > 0) {
+            Address address = addressList.get(0);
+            Log.i("AddressMaps", address.toString());
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM,
+                    address.getAddressLine(0));
+        }
+    }
+
+    private void moveCamera(LatLng currLL, float defaultZoom, String title) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLL,defaultZoom));
+
+        MarkerOptions options = new MarkerOptions()
+                .position(currLL)
+                .title(title);
+        mMap.addMarker(options);
+
+        hideSoftKeyboard();
     }
 
     /**
@@ -88,14 +137,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         goToCurrentLocation();
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(@NonNull LatLng latLng) {
-                mMap.clear();
-                local = latLng;
-                mMap.addMarker(new MarkerOptions().position(latLng));
+
+        for(Map.Entry<String, LatLng> entry : Utils.PLACES.entrySet()) {
+            MarkerOptions options = new MarkerOptions().title(entry.getKey()).position(entry.getValue());
+            mMap.addMarker(options);
+        }
+
+        mMap.setOnMarkerClickListener(marker -> {
+            selectedMarker = marker;
+            local = marker.getPosition();
+            if(marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+            } else {
+                marker.showInfoWindow();
             }
+            return false;
         });
+        init();
     }
 
     @Override
@@ -133,5 +191,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
         fusedLocationProviderClient.getLastLocation();
+    }
+
+    private void hideSoftKeyboard() {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

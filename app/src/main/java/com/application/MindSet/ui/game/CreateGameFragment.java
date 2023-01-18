@@ -42,7 +42,7 @@ public class CreateGameFragment extends Fragment {
     private AddPlayersFragment addPFrag;
     private Button dateBTN, timeBTN, localBTN, createBTN;
     private ImageView addPlayerBTN;
-    private String sport, dateDTO;
+    private String sport, dateDTO, localName;
     private LatLng local;
     private Calendar date = Calendar.getInstance();
     private LinearLayout playerInGame;
@@ -57,6 +57,7 @@ public class CreateGameFragment extends Fragment {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         local = (LatLng) extras.get("location");
+                        localName = (String) extras.get("localName");
                     }
                 }
         }
@@ -72,7 +73,7 @@ public class CreateGameFragment extends Fragment {
             dateBTN.setText(dateDTO);
         }
         if (local != null) {
-            localBTN.setText(local.toString());
+            localBTN.setText(localName);
         }
     }
 
@@ -159,7 +160,7 @@ public class CreateGameFragment extends Fragment {
                     playersIDs = this.addPFrag.getPlayersInGameIDs();
                 else
                     playersIDs = new ArrayList<>();
-                Game g = new Game(uID, sport, date.getTime(), local, playersIDs);
+                Game g = new Game(uID, sport, date.getTime(), local, playersIDs, localName);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Games").add(g).addOnSuccessListener(documentReference -> {
                     Toast.makeText(getActivity(), "Game created", Toast.LENGTH_SHORT).show();

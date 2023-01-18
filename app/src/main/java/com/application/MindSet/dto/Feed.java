@@ -11,9 +11,9 @@ public class Feed {
     private String local;
     private String Username;
     private String numberOfPlayer;
-    private Date date;
+    private String date;
 
-    public Feed(String username, String local, Date date, String numberOfPlayer) {
+    public Feed(String username, String local, String date, String numberOfPlayer) {
         this.local = local;
         Username = username;
         this.numberOfPlayer = numberOfPlayer;
@@ -44,11 +44,11 @@ public class Feed {
         this.numberOfPlayer = numberOfPlayer;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
