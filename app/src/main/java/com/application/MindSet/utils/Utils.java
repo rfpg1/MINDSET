@@ -23,6 +23,7 @@ public class Utils {
 
     public static HashMap <String, LatLng> PLACES = new HashMap<>() {{
         put("Cidade Universitária", new LatLng(	38.7522222, -9.1586111));
+        put("Associação Desportiva de Oeiras", new LatLng(38.6858333, -009.3136111));
     }};
 
     public static boolean isGameIn(Date gameDate, int timeNeededToMove) {
@@ -34,6 +35,7 @@ public class Utils {
     }
 
     public static int getDuration(String second) {
+        //X mins || X hours and Y mins
         if(second.contains("hours")) {
             String[] duration = second.split("mins|hours");
             for (int i = 0; i <duration.length; i++) {
@@ -55,5 +57,12 @@ public class Utils {
 
             return result;
         }
+    }
+
+    public static String getDateDTO(Date d) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        return c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + 1 + "/" + c.get(Calendar.YEAR)
+               + " " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE);
     }
 }
