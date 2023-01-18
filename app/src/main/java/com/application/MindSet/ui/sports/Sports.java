@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import com.application.MindSet.MainActivity;
 import com.application.MindSet.R;
@@ -43,10 +44,41 @@ public class Sports extends BottomSheetDialogFragment {
         View root= inflater.inflate(R.layout.fragment_sports, container, false);
         final Button tennisButton = root.findViewById(R.id.tennis_button);
         tennisButton.setOnClickListener(view -> {
-            //TODO: Aplicar filtro
+            action("Tennis");
+        });
+        final Button rugbyButton = root.findViewById(R.id.rugby_button);
+        rugbyButton.setOnClickListener(view -> {
+            action("Rugby");
+        });
+        final Button footballButton = root.findViewById(R.id.football_button);
+        footballButton.setOnClickListener(view -> {
+            action("Football");
+        });
+        final Button basketballButton = root.findViewById(R.id.basketball_button);
+        basketballButton.setOnClickListener(view -> {
+            action("Basketball");
+        });
+        final Button volleyballButton = root.findViewById(R.id.volleyball_button);
+        volleyballButton.setOnClickListener(view -> {
+            action("Volleyball");
+        });
+        final Button boxingButton = root.findViewById(R.id.boxing_button);
+        boxingButton.setOnClickListener(view -> {
+            action("Boxing");
+        });
+
+        final Button allButton = root.findViewById(R.id.all_button);
+        allButton.setOnClickListener(view -> {
+            action(null);
         });
 
         return root;
+    }
+
+    private void action(String sport) {
+        Bundle bundle = new Bundle();
+        bundle.putString("Sport", sport);
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home, bundle);
     }
 
 

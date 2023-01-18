@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.Date;
+
 public class Feed {
 
     private String local;
     private String Username;
     private String numberOfPlayer;
-    private String date;
+    private Date date;
 
-    public Feed(String username, String local, String date, String numberOfPlayer) {
+    public Feed(String username, String local, Date date, String numberOfPlayer) {
         this.local = local;
         Username = username;
         this.numberOfPlayer = numberOfPlayer;
@@ -42,11 +44,11 @@ public class Feed {
         this.numberOfPlayer = numberOfPlayer;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

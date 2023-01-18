@@ -1,43 +1,29 @@
 package com.application.MindSet;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.application.MindSet.databinding.ActivityMainBinding;
-import com.application.MindSet.gestureDetector.SimpleGestureListener;
-import com.application.MindSet.notification.NotificationBroadCast;
+import com.application.MindSet.gestureDetector.ShakeListener;
 import com.application.MindSet.ui.sports.Sports;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private GestureDetectorCompat mDetector;
     private NavController navController;
     private static Context context;
-    //TODO ask for permissions
-    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private final String[] REQUEST_PERMISSIONS = {
-            Manifest.permission.SCHEDULE_EXACT_ALARM,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -72,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         Sports sports = Sports.getInstance();
         sports.setManager(getSupportFragmentManager());
         sports.setContext(this);
-        this.mDetector = new GestureDetectorCompat(getApplicationContext(), new SimpleGestureListener(sports));
+
+        new ShakeListener(sports, getApplicationContext());
+
         this.context = getApplicationContext();
         askForPermissions();
     }
@@ -108,11 +96,5 @@ public class MainActivity extends AppCompatActivity {
 
     public static Context getContext(){
         return context;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
     }
 }

@@ -30,9 +30,10 @@
         android:padding="8dp">
 
         <Button
+            android:id="@+id/rugby_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Golf"
+            android:text="Rugby"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
 
@@ -47,6 +48,7 @@
         android:padding="8dp">
 
         <Button
+            android:id="@+id/basketball_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Basketball"
@@ -64,9 +66,10 @@
         android:padding="8dp">
 
         <Button
+            android:id="@+id/football_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Futebol"
+            android:text="Football"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
     </LinearLayout>
@@ -80,9 +83,43 @@
         android:padding="8dp">
 
         <Button
+            android:id="@+id/volleyball_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Volleyball"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/boxing"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Boxing"
+            android:id="@+id/boxing_button"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="All"
+            android:id="@+id/all_button"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
     </LinearLayout>

@@ -12,6 +12,7 @@ import com.application.MindSet.R;
 import com.application.MindSet.dto.Feed;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.MyViewHolder> {
 
@@ -50,7 +51,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         holder.username.setText(username);
         String local = feedList.get(position).getLocal();
         holder.local.setText(local);
-        String date = feedList.get(position).getDate();
+        String date = feedList.get(position).getDate().toString();
         holder.date.setText(date);
         String players = feedList.get(position).getNumberOfPlayer();
         holder.players.setText(players);
