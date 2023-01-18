@@ -13,13 +13,19 @@ import com.application.MindSet.dto.Feed;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.MyViewHolder> {
 
-    private ArrayList<Feed> feedList;
+    private List<Feed> feedList;
 
-    public FeedRecyclerViewAdapter(ArrayList<Feed> feedList){
+    public FeedRecyclerViewAdapter(List<Feed> feedList){
         this.feedList = feedList;
+    }
+
+    public void filterList(List<Feed> filteredList) {
+        this.feedList = filteredList;
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -1,29 +1,28 @@
 package com.application.MindSet.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.application.MindSet.databinding.FragmentFeedBinding;
 import com.application.MindSet.dto.Feed;
 import com.application.MindSet.dto.Game;
 import com.application.MindSet.utils.Utils;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class FeedFragment extends Fragment {
 
@@ -31,6 +30,7 @@ public class FeedFragment extends Fragment {
 
     private FragmentFeedBinding binding;
     private RecyclerView view;
+    private FeedRecyclerViewAdapter fAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,9 +43,38 @@ public class FeedFragment extends Fragment {
         if(bundle != null) {
             sport = bundle.getString("Sport");
         }
+
+        EditText search = binding.searchBar;
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         setFeed(sport);
 
         return root;
+    }
+
+    private void filter(String text) {
+        List<Feed> filteredList = new ArrayList<>();
+        for(Feed f : feedList) {
+            if(f.getUsername().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(f);
+            }
+        }
+        fAdapter.filterList(filteredList);
     }
 
     private void setAdapter() {
@@ -55,11 +84,11 @@ public class FeedFragment extends Fragment {
                 return 0;
             return f.getDate().compareTo(f1.getDate());
         });
-        FeedRecyclerViewAdapter adapter = new FeedRecyclerViewAdapter(feedList);
+        fAdapter = new FeedRecyclerViewAdapter(feedList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         view.setLayoutManager(layoutManager);
         view.setItemAnimator(new DefaultItemAnimator());
-        view.setAdapter(adapter);
+        view.setAdapter(fAdapter);
     }
 
     private void setFeed(String sport) {
