@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.application.MindSet.MainActivity;
 import com.application.MindSet.R;
 import com.application.MindSet.SignInActivity;
 import com.application.MindSet.SignUpActivity;
@@ -120,7 +121,9 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(ProfileActivity.this, "Information saved", Toast.LENGTH_SHORT).show();
-                                finish(); //Para voltar para a atividade anterior e não ir parar ao feed sempre
+                                //finish(); //Para voltar para a atividade anterior e não ir parar ao feed sempre
+                                Intent i = new Intent(ProfileActivity.this, MainActivity.class);
+                                startActivity(i);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -43,7 +43,6 @@ public class ShakeListener implements SensorEventListener {
                     sports.dismiss();
                 }
             }
-
         }
     }
 
