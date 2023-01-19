@@ -62,7 +62,22 @@ public class Utils {
     public static String getDateDTO(Date d) {
         Calendar c = Calendar.getInstance();
         c.setTime(d);
-        return c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + 1 + "/" + c.get(Calendar.YEAR)
-               + " " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE);
+
+        int hour = c.get(Calendar.HOUR);
+        int minute = c.get(Calendar.MINUTE);
+        StringBuilder bob = new StringBuilder();
+        bob.append(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + 1 + "/" + c.get(Calendar.YEAR) + " ");
+        if(hour < 10) {
+            bob.append("0" + hour + ":");
+        } else {
+            bob.append(hour + ":");
+        }
+
+        if(minute < 10) {
+            bob.append("0" + minute);
+        } else {
+            bob.append(minute);
+        }
+        return bob.toString();
     }
 }
