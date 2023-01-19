@@ -15,16 +15,16 @@ public class NotificationBroadCast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("LocationUpdate", "Received notification");
         int notificationID = intent.getIntExtra("NotificationID", 0);
+        int duration = intent.getIntExtra("duration", 0) + 15;
+        Log.i("NotificationGame", duration + "");
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
 
-        Notification notification = builder.setContentTitle("Test")
-                .setContentText("Foda-se")
-                .setTicker("ALERTA RAMBOIA")
+        Notification notification = builder.setContentTitle("Game Notification")
+                .setContentText("You have a game in less than " + duration + " minutes you have to start to move")
                 .setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher).build();
+                .setSmallIcon(R.drawable.logotipo).build();
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(notificationID, notification);

@@ -40,6 +40,7 @@ public class LocationService {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
+            Log.i("NotificationGame", "LocationCallBack Function");
 
             LatLng currentLocation = new LatLng(locationResult.getLastLocation().getLatitude(),
                     locationResult.getLastLocation().getLongitude());
