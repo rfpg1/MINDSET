@@ -63,12 +63,16 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
                 @Override
                 public void onClick(View view) {
                     hsv.removeView(view);
+                    playersInGameIDs.remove(view.getTag(R.string.playerId));
+                    notifyDataSetChanged();
                 }
             });
             hsv.addView(img);
+            playersInGameIDs.add(playersIDs.get(position));
             playersIDs.remove(position);
             names.remove(position);
             ((ViewManager) holder.playerLayout.getParent()).removeView(holder.playerLayout);
+            notifyDataSetChanged();
         });
     }
 
