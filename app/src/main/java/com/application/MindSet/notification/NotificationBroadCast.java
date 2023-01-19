@@ -1,6 +1,7 @@
 package com.application.MindSet.notification;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +16,17 @@ public class NotificationBroadCast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("LocationUpdate", "Creating channel");
+        CharSequence name = "NotificationChannel";
+        String description = "Channel for game notifications";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(NotificationBroadCast.CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+
+        NotificationManager manager = context.getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
+        Log.i("LocationUpdate", "Leaving create channel");
+
         int notificationID = intent.getIntExtra("NotificationID", 0);
         int duration = intent.getIntExtra("duration", 0) + 15;
         Log.i("NotificationGame", duration + "");
@@ -26,7 +38,7 @@ public class NotificationBroadCast extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.logotipo).build();
 
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        //NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(notificationID, notification);
     }
 }
