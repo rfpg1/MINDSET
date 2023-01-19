@@ -189,10 +189,9 @@ public class CreateGameFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                String timeDTO = i + " : " + i1;
                 date.set(Calendar.HOUR_OF_DAY, i);
                 date.set(Calendar.MINUTE, i1);
-                timeBTN.setText(timeDTO);
+                timeBTN.setText(getHourFormat(i,i1));
             }
         };
         Calendar cal = Calendar.getInstance();
@@ -205,11 +204,26 @@ public class CreateGameFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(context, style, timeSetListener, hour, minute, android.text.format.DateFormat.is24HourFormat(context));
     }
 
+    private String getHourFormat(int i, int i1) {
+        String format = "";
+        if (i < 10){
+            format+= "0" + i;
+        }else{
+            format+= i;
+        }
+        format+=":";
+        if (i1 < 10){
+            format+= "0" + i1;
+        }else{
+            format+= i1;
+        }
+        return format;
+    }
+
     private void initDatePicker(Context context) {
 
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
-            month += 1;
-            date.set(year , month - 1, day);
+            date.set(year , month, day);
             dateDTO = day + " " + getMonthFormat(month) + " " + year;
             dateBTN.setText(dateDTO);
         };
@@ -226,29 +240,29 @@ public class CreateGameFragment extends Fragment {
 
     private String getMonthFormat(int month) {
         switch (month) {
-            case 1:
+            case 0:
                 return "JAN";
-            case 2:
+            case 1:
                 return "FEV";
-            case 3:
+            case 2:
                 return "MAR";
-            case 4:
+            case 3:
                 return "ABR";
-            case 5:
+            case 4:
                 return "MAY";
-            case 6:
+            case 5:
                 return "JUN";
-            case 7:
+            case 6:
                 return "JUL";
-            case 8:
+            case 7:
                 return "AUG";
-            case 9:
+            case 8:
                 return "SET";
-            case 10:
+            case 9:
                 return "OCT";
-            case 11:
+            case 10:
                 return "NOV";
-            case 12:
+            case 11:
                 return "DEC";
         }
         return null;

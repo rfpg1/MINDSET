@@ -1,8 +1,11 @@
 package com.application.MindSet.ui.home;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.R;
 import com.application.MindSet.dto.Feed;
+import com.application.MindSet.ui.game.MapsActivity;
+import com.application.MindSet.ui.gameInfo.GameInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +39,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         private TextView local;
         private TextView date;
         private TextView players;
+        private ImageView image;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +47,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             local = itemView.findViewById(R.id.local_fill);
             date = itemView.findViewById(R.id.date_fill);
             players = itemView.findViewById(R.id.players_fill);
+            image = itemView.findViewById(R.id.icon);
         }
     }
 
@@ -52,7 +59,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FeedRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FeedRecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String username = feedList.get(position).getUsername();
         holder.username.setText(username);
         String local = feedList.get(position).getLocal();
@@ -61,6 +68,36 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         holder.date.setText(date);
         String players = feedList.get(position).getNumberOfPlayer();
         holder.players.setText(players);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(holder.itemView.getContext(), GameInfo.class);
+                i.putExtra("id", feedList.get(position).getGameID());
+                holder.itemView.getContext().startActivity(i);
+            }
+        });
+
+        switch (feedList.get(position).getSport()){
+            case "Football":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_soccer_24);
+                break;
+            case "Basketball":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_basketball_24);
+                break;
+            case "Rugby":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_rugby_24);
+                break;
+            case "Volleyball":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_volleyball_24);
+                break;
+            case "Tennis":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_tennis_24);
+                break;
+            case "Boxing":
+                holder.image.setBackgroundResource(R.drawable.ic_baseline_sports_mma_24);
+                break;
+        }
+
     }
 
     @Override

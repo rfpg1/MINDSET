@@ -1,5 +1,6 @@
 package com.application.MindSet.ui.dashboard;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.MindSet.R;
 import com.application.MindSet.dto.Game;
+import com.application.MindSet.ui.gameInfo.GameInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
         private TextView longitude;
         private TextView latitude;
         private ImageView star;
+        private ImageView icon;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -38,6 +41,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
             date = itemView.findViewById(R.id.date);
             sport = itemView.findViewById(R.id.sport);
             star = itemView.findViewById(R.id.star);
+            icon = itemView.findViewById(R.id.icon);
         }
     }
 
@@ -68,6 +72,27 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
        } else {
            holder.star.setVisibility(View.INVISIBLE);
        }
+
+        switch (sport){
+            case "Football":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_soccer_24);
+                break;
+            case "Basketball":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_basketball_24);
+                break;
+            case "Rugby":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_rugby_24);
+                break;
+            case "Volleyball":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_volleyball_24);
+                break;
+            case "Tennis":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_tennis_24);
+                break;
+            case "Boxing":
+                holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_mma_24);
+                break;
+        }
     }
 
     @Override

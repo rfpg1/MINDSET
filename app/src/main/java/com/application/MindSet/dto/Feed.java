@@ -12,12 +12,16 @@ public class Feed {
     private String Username;
     private String numberOfPlayer;
     private String date;
+    private String gameID;
+    private String sport;
 
-    public Feed(String username, String local, String date, String numberOfPlayer) {
+    public Feed(String gameID, String username, String local, String date, String numberOfPlayer, String sport) {
         this.local = local;
         Username = username;
         this.numberOfPlayer = numberOfPlayer;
         this.date = date;
+        this.gameID = gameID;
+        this.sport = sport;
     }
 
     public String getLocal() {
@@ -50,5 +54,13 @@ public class Feed {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getGameID() {
+        return gameID;
+    }
+
+    public String getSport() {
+        return sport;
     }
 }

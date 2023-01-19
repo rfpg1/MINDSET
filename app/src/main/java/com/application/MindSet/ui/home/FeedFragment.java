@@ -97,13 +97,14 @@ public class FeedFragment extends Fragment {
             feedList = new ArrayList<>();
             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                 Game g = queryDocumentSnapshot.toObject(Game.class);
+                String id = queryDocumentSnapshot.getId();
                 if(sport == null || g.getSport().equals(sport)){
                     db.collection("Profiles").document(g.getOwnerID()).get().addOnCompleteListener(task1 -> {
                         DocumentSnapshot documentSnapshot = task1.getResult();
                         String name = documentSnapshot.get("name", String.class);
-                        Feed f = new Feed(name, g.getLocalName(),
+                        Feed f = new Feed(id, name, g.getLocalName(),
                                 Utils.getDateDTO(g.getDate()), g.getParticipantsID().size() + 1 + "/" +
-                                Utils.MAX_OF_EACH_GAME.get(g.getSport()));
+                                Utils.MAX_OF_EACH_GAME.get(g.getSport()), g.getSport());
                         feedList.add(f);
                         setAdapter();
                     });

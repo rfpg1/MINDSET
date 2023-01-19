@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.gameInfo.GameInfo">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:id="@+id/gameImage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateTV"
+        android:text="Date"
+        android:textSize="18dp"
+        android:layout_margin="32dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/gameImage"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateBTN"
+        android:layout_toRightOf="@id/dateTV"
+        android:layout_alignBaseline="@id/dateTV"
+        android:layout_marginRight="32dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/localTV"
+        android:text="Local"
+        android:textSize="18dp"
+        android:layout_margin="32dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/dateTV"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/localBTN"
+        android:layout_toRightOf="@id/localTV"
+        android:layout_alignBaseline="@id/localTV"
+        android:layout_alignLeft="@id/dateBTN"
+        android:layout_marginRight="32dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playersTV"
+        android:text="Players:"
+        android:textSize="18dp"
+        android:layout_margin="32dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/localTV"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/playersHSV"
+        android:layout_below="@id/playersTV"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp">
+        <LinearLayout
+            android:id="@+id/playersLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </HorizontalScrollView>
+</RelativeLayout>
