@@ -39,6 +39,8 @@ public class ShakeListener implements SensorEventListener {
             if (shakeValue > DELTA_FOR_SHAKE){
                 if(!sports.isAdded()){
                     sports.show();
+                } else {
+                    sports.dismiss();
                 }
             }
 
