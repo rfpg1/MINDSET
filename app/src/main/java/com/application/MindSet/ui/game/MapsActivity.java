@@ -14,10 +14,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import com.application.MindSet.R;
+import com.application.MindSet.SignInActivity;
 import com.application.MindSet.databinding.ActivityMapsBinding;
 import com.application.MindSet.utils.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,11 +76,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Button chooseBtn = binding.chooseBTN;
         chooseBtn.setOnClickListener(view -> {
-            Intent backToCreate = new Intent();
-            backToCreate.putExtra("location", local);
-            backToCreate.putExtra("localName", selectedMarker.getTitle());
-            setResult(RESULT_OK, backToCreate);
-            finish();
+            if(selectedMarker != null){
+                Intent backToCreate = new Intent();
+                backToCreate.putExtra("location", local);
+                backToCreate.putExtra("localName", selectedMarker.getTitle());
+                setResult(RESULT_OK, backToCreate);
+                finish();
+            } else {
+                Toast.makeText(MapsActivity.this, "Need to select a marker", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
