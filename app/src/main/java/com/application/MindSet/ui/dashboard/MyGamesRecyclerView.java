@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.application.MindSet.R;
 import com.application.MindSet.dto.Game;
 import com.application.MindSet.ui.gameInfo.GameInfo;
+import com.application.MindSet.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerView.MyViewHolder> {
 
-    private HashMap<Game, Boolean> myGamesList;
+    private HashMap<Game, Pair<Boolean, String>> myGamesList;
 
-    public MyGamesRecyclerView(HashMap<Game, Boolean> gamesList) {
+    public MyGamesRecyclerView(HashMap<Game, Pair<Boolean, String>> gamesList) {
         this.myGamesList = gamesList;
     }
 
@@ -54,7 +55,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Game g = (Game) myGamesList.keySet().toArray()[position];;
+        Game g = (Game) myGamesList.keySet().toArray()[position];
         double latitude = g.getLatitude();
         holder.latitude.setText(latitude + "");
 
@@ -67,7 +68,7 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
         String sport = g.getSport();
         holder.sport.setText(sport);
 
-       if(myGamesList.get(g)){
+       if(myGamesList.get(g).getFirst()){
            holder.star.setVisibility(View.VISIBLE);
        } else {
            holder.star.setVisibility(View.INVISIBLE);
@@ -93,6 +94,15 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
                 holder.icon.setBackgroundResource(R.drawable.ic_baseline_sports_mma_24);
                 break;
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(holder.itemView.getContext(), GameInfo.class);
+                i.putExtra("id", myGamesList.get(g).getSecond());
+                holder.itemView.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override

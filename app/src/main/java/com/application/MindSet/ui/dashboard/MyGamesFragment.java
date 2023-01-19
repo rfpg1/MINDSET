@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.application.MindSet.databinding.FragmentMyGamesBinding;
 import com.application.MindSet.dto.Game;
+import com.application.MindSet.utils.Pair;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class MyGamesFragment extends Fragment {
 
-    private HashMap<Game, Boolean> gamesList;
+    private HashMap<Game, Pair<Boolean, String>> gamesList;
 
     private FragmentMyGamesBinding binding;
     private RecyclerView view;
@@ -56,11 +57,11 @@ public class MyGamesFragment extends Fragment {
                 String uID = mUser.getUid();
 
                 if(uID.equals(g.getOwnerID())) {
-                    gamesList.put(g, true);
+                    gamesList.put(g, new Pair<>(true, queryDocumentSnapshot.getId()));
                 } else {
                     List<String> participants = g.getParticipantsID();
                     if(participants.contains(uID)) {
-                        gamesList.put(g, false);
+                        gamesList.put(g, new Pair<>(false, queryDocumentSnapshot.getId()));
                     }
                 }
             }
