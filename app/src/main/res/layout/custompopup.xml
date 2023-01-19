@@ -1,63 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.profile.ProfileActivity">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:background="@color/orange"
+    android:padding="5dp"
+    android:layout_gravity="center">
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="467dp"
-        android:layout_height="219dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/profile_shape_rectangle"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-26dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center" />
 
-
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="312dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/profile_shape"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="59dp" />
-
-    <ImageView
-        android:id="@+id/profileImg"
-        android:layout_width="122dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_baseline_person_focus_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="-10dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/white_background"
         android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
-        android:layout_marginTop="145dp"
-        tools:ignore="MissingConstraints">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,9 +40,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
@@ -107,12 +81,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="1dp"
             android:orientation="horizontal"
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/surname"
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -122,11 +96,11 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/surnameET"
+                android:id="@+id/surnameETv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Surname"
+                android:text="surname"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
@@ -142,7 +116,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="1dp"
             android:orientation="horizontal"
             android:padding="8dp">
 
@@ -157,7 +131,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/emailET"
+                android:id="@+id/surnameET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -177,7 +151,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="1dp"
             android:orientation="horizontal"
             android:padding="8dp">
 
@@ -192,7 +166,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/passwordET"
+                android:id="@+id/profilePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -201,42 +175,30 @@
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
         </LinearLayout>
-    </LinearLayout>
 
+</LinearLayout>
 
     <Button
         android:id="@+id/saveBTN"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/orange"
-        android:gravity="center"
+        android:layout_width="252dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/black"
         android:inputType="textPersonName"
-        android:text="Save"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        android:padding="5dp"
+        android:selectAllOnFocus="true"
+        android:text="SAVE"
+        android:textAlignment="center" />
 
     <Button
-        android:id="@+id/button_logout"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/red"
-        android:gravity="center"
-        android:onClick="logout"
-        android:text="Log out"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/saveBTN"
-        app:layout_constraintVertical_bias="0.0" />
+        android:id="@+id/cancelBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:inputType="textPersonName"
+        android:padding="1dp"
+        android:selectAllOnFocus="true"
+        android:text="CANCEL" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
