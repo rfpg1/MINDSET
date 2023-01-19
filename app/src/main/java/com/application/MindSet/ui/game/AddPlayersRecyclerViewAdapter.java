@@ -47,8 +47,10 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
         holder.username.setText(names.get(position));
         holder.profilePic.setImageResource(R.drawable.border_round_corners);
         holder.profilePic.setOnClickListener(v -> {
+            LinearLayout rl = new LinearLayout(hsv.getContext());
+            rl.setOrientation(LinearLayout.VERTICAL);
 
-            ImageView img = new ImageView(hsv.getContext());
+            ImageView img = new ImageView(rl.getContext());
             final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
             int oneHunDP = (int) (100 * scale);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
@@ -57,9 +59,16 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
             img.setImageResource(R.drawable.ic_outline_person_24);
             img.setBackgroundResource(R.drawable.round_corners_orange);
             img.setLayoutParams(params);
-            img.setTag(R.string.playerId, playersIDs.get(position));
-            img.setTag(R.string.playerName, names.get(position));
-            img.setOnClickListener(new View.OnClickListener() {
+            rl.addView(img);
+
+            TextView txt = new TextView(rl.getContext());
+            txt.setText(names.get(position));
+            txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+            rl.addView(txt);
+
+            rl.setTag(R.string.playerId, playersIDs.get(position));
+            rl.setTag(R.string.playerName, names.get(position));
+            rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     hsv.removeView(view);
@@ -67,7 +76,7 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
                     notifyDataSetChanged();
                 }
             });
-            hsv.addView(img);
+            hsv.addView(rl);
             playersInGameIDs.add(playersIDs.get(position));
             playersIDs.remove(position);
             names.remove(position);

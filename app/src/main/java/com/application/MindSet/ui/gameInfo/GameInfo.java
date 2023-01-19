@@ -80,16 +80,33 @@ public class GameInfo extends AppCompatActivity {
                             LinearLayout hsv = findViewById(R.id.playersLL);
 
                             for(String s :participants){
-                                ImageView img = new ImageView(hsv.getContext());
-                                final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
-                                int oneHunDP = (int) (100 * scale);
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
-                                int fiveDP = (int) (5 * scale);
-                                params.setMargins(fiveDP,fiveDP,fiveDP,fiveDP);
-                                img.setImageResource(R.drawable.ic_outline_person_24);
-                                img.setBackgroundResource(R.drawable.round_corners_orange);
-                                img.setLayoutParams(params);
-                                hsv.addView(img);
+
+                                db.collection("Profiles").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        LinearLayout rl = new LinearLayout(hsv.getContext());
+                                        rl.setOrientation(LinearLayout.VERTICAL);
+
+                                        TextView txt = new TextView(rl.getContext());
+                                        txt.setText(documentSnapshot.get("name", String.class));
+                                        txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+
+                                        ImageView img = new ImageView(hsv.getContext());
+                                        final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
+                                        int oneHunDP = (int) (100 * scale);
+                                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
+                                        int fiveDP = (int) (5 * scale);
+                                        params.setMargins(fiveDP,fiveDP,fiveDP,fiveDP);
+                                        img.setImageResource(R.drawable.ic_outline_person_24);
+                                        img.setBackgroundResource(R.drawable.round_corners_orange);
+                                        img.setLayoutParams(params);
+
+                                        rl.addView(img);
+                                        rl.addView(txt);
+
+                                        hsv.addView(rl);
+                                    }
+                                });
                             }
                         }
                     }
