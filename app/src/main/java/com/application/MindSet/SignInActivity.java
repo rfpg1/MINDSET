@@ -7,8 +7,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import android.text.method.PasswordTransformationMethod;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -51,6 +56,23 @@ public class SignInActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         progressDialog = new ProgressDialog(this);
+
+        final ImageView showHideIcon = findViewById(R.id.show_hide_icon);
+
+        showHideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordET.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+                    passwordET.setTransformationMethod(null);
+                    showHideIcon.setImageResource(R.drawable.ic_launcher_eye);
+                } else {
+                    passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showHideIcon.setImageResource(R.drawable.ic_baseline_password_22);
+                }
+                passwordET.setSelection(passwordET.getText().length());
+            }
+        });
+
 
         signupTV.setOnClickListener(view -> {
             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
