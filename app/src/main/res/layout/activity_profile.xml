@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="145dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/white_background"
         android:orientation="vertical"
@@ -31,7 +31,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="150dp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -101,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="surname"
                 android:text="Surname"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/gray"
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="email"
+                android:hint="email"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="password"
+                android:hint="password"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
@@ -181,26 +181,40 @@
 
     <Button
         android:id="@+id/saveBTN"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
         android:backgroundTint="@color/orange"
         android:gravity="center"
         android:inputType="textPersonName"
         android:text="Save"
         android:textSize="18sp"
         app:cornerRadius="20dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/cancelBTN"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.046" />
+
+    <Button
+        android:id="@+id/cancelBTN"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/orange"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="Cancel"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.046" />
 
     <Button
         android:id="@+id/button_logout"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:backgroundTint="@color/red"
         android:gravity="center"
         android:onClick="logout"
@@ -209,9 +223,26 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/saveBTN"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.181" />
+
+    <Button
+        android:id="@+id/profile_button"
+        android:layout_width="31dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="@color/gray"
+        android:paddingTop="4dp"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/ic_baseline_camera_alt_24"
+        app:iconGravity="textTop"
+        app:iconSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profileImg"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

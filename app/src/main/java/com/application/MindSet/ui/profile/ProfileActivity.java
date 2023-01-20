@@ -1,20 +1,11 @@
 package com.application.MindSet.ui.profile;
 
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.application.MindSet.MainActivity;
 import com.application.MindSet.R;
-import com.application.MindSet.SignInActivity;
 import com.application.MindSet.SignUpActivity;
 import com.application.MindSet.ToolBar;
 import com.application.MindSet.databinding.ActivityProfileBinding;
@@ -76,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         saveBtn = binding.saveBTN;
-        // cancelBTN = binding.cancelBTN;
+        cancelBTN = binding.cancelBTN;
 
         // editProfile = findViewById(R.id.editButton);
 
@@ -101,6 +91,14 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
+        Button profileButton = findViewById(R.id.profile_button);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, ProfileActivity2.class);
+                startActivity(intent);
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,11 +131,10 @@ public class ProfileActivity extends AppCompatActivity {
                         });
             }
         });
-/*
+
         cancelBTN.setOnClickListener(view -> finish());
 
 
- */
     }
 
 
@@ -149,21 +146,5 @@ public class ProfileActivity extends AppCompatActivity {
         Toast.makeText(ProfileActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
     }
 
-/*
-    public void ShowPopup(View v) {
-        TextView txtclose;
-        myDialog.setContentView(R.layout.custompopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("X");
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-       // myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-    */
 
 }
