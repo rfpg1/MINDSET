@@ -53,14 +53,6 @@ public class ProfileActivity2 extends AppCompatActivity {
             }
         });
 
-        takePictureButton = findViewById(R.id.take_picture_button);
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePhoto();
-            }
-        });
-
         uploadPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
