@@ -67,7 +67,7 @@ public class SignInActivity extends AppCompatActivity {
                     showHideIcon.setImageResource(R.drawable.ic_launcher_eye);
                 } else {
                     passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    showHideIcon.setImageResource(R.drawable.ic_baseline_password_24);
+                    showHideIcon.setImageResource(R.drawable.ic_baseline_password_22);
                 }
                 passwordET.setSelection(passwordET.getText().length());
             }
