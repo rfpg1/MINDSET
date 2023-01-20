@@ -1,22 +1,38 @@
 package com.application.MindSet.ui.gameInfo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.MindSet.R;
+import com.application.MindSet.SignInActivity;
+import com.application.MindSet.dto.Message;
+import com.application.MindSet.ui.game.AddPlayersFragment;
+import com.application.MindSet.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameInfo extends AppCompatActivity {
@@ -49,6 +65,78 @@ public class GameInfo extends AppCompatActivity {
                             participants = (ArrayList<String>) documentSnapshot.get("participantsID");
                             participants.add(ownerID);
 
+                            LinearLayout hsv = findViewById(R.id.playersLL);
+
+                            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String myId = mUser.getUid();
+
+                            ImageView addButton = findViewById(R.id.addPlayerBTN);
+                            final AddPlayersFragment[] addPFrag = new AddPlayersFragment[1];
+
+                            Button addNewPlayers = findViewById(R.id.add_new_players);
+                            if(!myId.equals(ownerID)) {
+                                addNewPlayers.setVisibility(View.INVISIBLE);
+                            } else {
+                                addNewPlayers.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if(addPFrag[0] != null) {
+                                            List<String> newPlayers = addPFrag[0].getInvitedPlayersIDs();
+                                            for(String invitedPlayer : newPlayers) {
+                                                Message m = new Message(myId, invitedPlayer, "Invited for game",
+                                                        true, documentSnapshot.getId(), sport);
+                                                db.collection("Messages").add(m).addOnSuccessListener(documentReference1 -> {
+                                                    Log.i("InvitePlayer", "Message created");
+                                                }).addOnFailureListener(fail -> {
+                                                    Log.i("InvitePlayer", "Message failed");
+                                                });
+                                            }
+                                            finish();
+                                        } else {
+                                            Toast.makeText(GameInfo.this, "Select new players to add", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+
+                            if(Utils.MAX_OF_EACH_GAME.get(sport) == participants.size()){
+                                hsv.removeView(addButton);
+                            } else {
+                                addButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if(myId.equals(ownerID)) {
+                                            //<ID, Name>
+                                            HashMap<String, String> usersToInvite = new HashMap<>();
+                                            db.collection("Profiles").get().addOnCompleteListener(task -> {
+                                                for(QueryDocumentSnapshot document : task.getResult()) {
+                                                    if(!participants.contains(document.getId())) {
+                                                        usersToInvite.put(document.getId(), document.get("name", String.class));
+                                                    }
+                                                }
+                                                addPFrag[0] = new AddPlayersFragment(new ArrayList<>(usersToInvite.values()),
+                                                                        //IDs dos jogadores a convidar
+                                                        hsv, new ArrayList<>(usersToInvite.keySet()));
+                                                addPFrag[0].show(getSupportFragmentManager(), "ADD PLAYER");
+                                            });
+                                        } else {
+                                            if(!participants.contains(myId)){
+                                                Message m = new Message(myId, ownerID, "Can I join your game?",
+                                                        true, documentSnapshot.getId(), sport);
+                                                db.collection("Messages").add(m).addOnSuccessListener(documentReference1 -> {
+                                                    Log.i("InvitePlayer", "Message created");
+                                                    finish();
+                                                }).addOnFailureListener(fail -> {
+                                                    Log.i("InvitePlayer", "Message failed");
+                                                });
+                                            } else {
+                                                Toast.makeText(GameInfo.this, "Already in this game", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+
                             switch (sport){
                                 case "Football":
                                     findViewById(R.id.gameImage).setBackgroundResource(R.drawable.ic_baseline_sports_soccer_24);
@@ -75,9 +163,6 @@ public class GameInfo extends AppCompatActivity {
 
                             TextView localTV = findViewById(R.id.localBTN);
                             localTV.setText(local);
-
-
-                            LinearLayout hsv = findViewById(R.id.playersLL);
 
                             for(String s :participants){
 
