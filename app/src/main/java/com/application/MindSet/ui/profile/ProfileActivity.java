@@ -1,11 +1,16 @@
 package com.application.MindSet.ui.profile;
 
 
+import static com.application.MindSet.MainActivity.getContext;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +21,15 @@ import com.application.MindSet.R;
 import com.application.MindSet.SignUpActivity;
 import com.application.MindSet.ToolBar;
 import com.application.MindSet.databinding.ActivityProfileBinding;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
     private String id = mUser.getUid();
 
     private EditText nameET, surnameET;
-    // private EditText emailET, passwordET;
+    private EditText emailET, passwordET;
+    private ImageView imageView;
     private Button saveBtn;
     private Button cancelBTN;
     private Button editProfile;
@@ -61,9 +70,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         nameET = binding.nameET;
         surnameET = binding.surnameET;
-        // emailET = binding.emailET;
+        emailET = binding.emailET;
         // passwordET = binding.passwordET;
 
+        imageView = binding.profileImg;
 
         saveBtn = binding.saveBTN;
         cancelBTN = binding.cancelBTN;
@@ -76,9 +86,18 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
+                            StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("image"));
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(getContext()).load(uri).into(imageView);
+                                }
+                            });
+
+
                             nameET.setText(documentSnapshot.getString(KEY_NAME));
                             surnameET.setText(documentSnapshot.getString(KEY_SURNAME));
-                            //    emailET.setText(documentSnapshot.getString(KEY_EMAIL));
+                            emailET.setText(documentSnapshot.getString(mUser.getEmail()));
                             //  passwordET.setText(documentSnapshot.getString(KEY_PASSWORD));
 
                           /*  EditText text = (EditText)findViewById(R.id.surnameET);
@@ -96,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileActivity.this, ProfileActivity2.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
@@ -105,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = nameET.getText().toString();
                 String surname = surnameET.getText().toString();
-                //   String email = emailET.getText().toString();
+                String email = emailET.getText().toString();
                 //    String password = passwordET.getText().toString();
 
                 Map<String, Object> profile = new HashMap<>();

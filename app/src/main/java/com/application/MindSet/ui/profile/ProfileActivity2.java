@@ -1,5 +1,6 @@
 package com.application.MindSet.ui.profile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
@@ -14,7 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.application.MindSet.MainActivity;
 import com.application.MindSet.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 
@@ -27,7 +33,7 @@ public class ProfileActivity2 extends AppCompatActivity {
     private Button uploadPictureButton;
     private Button takePictureButton;
     private Uri filePath;
-    private String userEmail;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class ProfileActivity2 extends AppCompatActivity {
         imageView = findViewById(R.id.image_view);
         changePictureButton = findViewById(R.id.change_picture_button);
         uploadPictureButton = findViewById(R.id.upload_picture_button);
-        userEmail = getIntent().getStringExtra("userEmail");
+        id = getIntent().getStringExtra("id");
 
         changePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +65,11 @@ public class ProfileActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (filePath != null) {
-                    FirebaseStorageHelper.getInstance().uploadImage(userEmail, filePath, new FirebaseStorageHelper.OnUploadImageListener() {
+                    System.out.println(filePath);
+                    StorageReference  ref = FirebaseStorageHelper.getInstance().uploadImage(id, filePath, new FirebaseStorageHelper.OnUploadImageListener() {
                         @Override
                         public void onSuccess() {
+
                             Toast.makeText(ProfileActivity2.this, "Upload successful", Toast.LENGTH_SHORT).show();
                         }
 
@@ -70,6 +78,9 @@ public class ProfileActivity2 extends AppCompatActivity {
                             Toast.makeText(ProfileActivity2.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("Profiles").document(id).update("image", ref.toString());
+
                 } else {
                     Toast.makeText(ProfileActivity2.this, "No image selected", Toast.LENGTH_SHORT).show();
                 }

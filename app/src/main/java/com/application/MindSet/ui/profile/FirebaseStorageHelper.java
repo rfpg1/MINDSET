@@ -28,7 +28,7 @@ public class FirebaseStorageHelper {
         return instance;
     }
 
-    public void uploadImage(String userEmail, Uri filePath, final OnUploadImageListener listener) {
+    public StorageReference uploadImage(String userEmail, Uri filePath, final OnUploadImageListener listener) {
         // Create a reference to the user's profile picture in Firebase Storage
         StorageReference profilePicRef = storageRef.child("images/users/" + userEmail + "/profile_pic.jpg");
 
@@ -45,6 +45,7 @@ public class FirebaseStorageHelper {
                 listener.onSuccess();
             }
         });
+        return profilePicRef;
     }
 
     public interface OnUploadImageListener {

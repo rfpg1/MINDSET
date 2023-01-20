@@ -1,8 +1,11 @@
 package com.application.MindSet.ui.gameInfo;
 
+import static com.application.MindSet.MainActivity.getContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.application.MindSet.SignInActivity;
 import com.application.MindSet.dto.Message;
 import com.application.MindSet.ui.game.AddPlayersFragment;
 import com.application.MindSet.utils.Utils;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +34,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -179,15 +185,28 @@ public class GameInfo extends AppCompatActivity {
                                             if(!documentSnapshot.getId().equals(myId)) {
                                                 RelativeLayout rl = new RelativeLayout(hsv.getContext());
                                                 ImageView img = new ImageView(rl.getContext());
+
                                                 final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
                                                 int oneHunDP = (int) (100 * scale);
                                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
                                                 int fiveDP = (int) (5 * scale);
                                                 params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
-                                                img.setImageResource(R.drawable.ic_outline_person_24);
                                                 img.setBackgroundResource(R.drawable.round_corners_orange);
                                                 img.setLayoutParams(params);
                                                 img.setId(R.id.imageView);
+                                                String location = documentSnapshot.getString("image");
+                                                System.out.println(location);
+                                                if(location != null && !location.isEmpty()){
+                                                    StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(location);
+                                                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri) {
+                                                            Glide.with(getContext()).load(uri).into(img);
+                                                        }
+                                                    });
+                                                }else{
+                                                    img.setImageResource(R.drawable.ic_outline_person_24);
+                                                }
                                                 rl.addView(img);
                                                 TextView txt = new TextView(rl.getContext());
                                                 txt.setText(documentSnapshot.get("name", String.class));
@@ -231,8 +250,20 @@ public class GameInfo extends AppCompatActivity {
                                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
                                                 int fiveDP = (int) (5 * scale);
                                                 params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
-                                                img.setImageResource(R.drawable.ic_outline_person_24);
                                                 img.setBackgroundResource(R.drawable.round_corners_orange);
+                                                String location = documentSnapshot.getString("image");
+                                                System.out.println(location);
+                                                if(location != null && !location.isEmpty()){
+                                                    StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(location);
+                                                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri) {
+                                                            Glide.with(getContext()).load(uri).into(img);
+                                                        }
+                                                    });
+                                                }else{
+                                                    img.setImageResource(R.drawable.ic_outline_person_24);
+                                                }
                                                 img.setLayoutParams(params);
 
                                                 rl.addView(img);
@@ -256,8 +287,20 @@ public class GameInfo extends AppCompatActivity {
                                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
                                             int fiveDP = (int) (5 * scale);
                                             params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
-                                            img.setImageResource(R.drawable.ic_outline_person_24);
                                             img.setBackgroundResource(R.drawable.round_corners_orange);
+                                            String location = documentSnapshot.getString("image");
+                                            System.out.println(location);
+                                            if(location != null && !location.isEmpty()){
+                                                StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(location);
+                                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        Glide.with(getContext()).load(uri).into(img);
+                                                    }
+                                                });
+                                            }else{
+                                                img.setImageResource(R.drawable.ic_outline_person_24);
+                                            }
                                             img.setLayoutParams(params);
 
                                             rl.addView(img);
