@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
+    android:background="@drawable/bgitem">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="75dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/sport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="13dp"
+        android:layout_toRightOf="@id/profile_pic"
+        android:text="Sport" />
+
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sport"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/profile_pic"
+        android:layout_marginTop="5dp"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/profile_pic"
+        android:layout_marginTop="5dp"
+        android:text="Owner" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_check_24"
+        android:id="@+id/correct"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="80dp"
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_close_24"
+        android:id="@+id/wrong"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

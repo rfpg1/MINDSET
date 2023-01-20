@@ -37,12 +37,17 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class MessageActivity extends AppCompatActivity {
 
     private ActivityMessageBinding binding;
-    private List<Message> messages;
+    private HashMap<String, Message> messages;
     private RecyclerView view;
     private String receiver;
     private String sender;
@@ -66,15 +71,16 @@ public class MessageActivity extends AppCompatActivity {
         message = binding.message;
         send = binding.sendMessage;
         send.setOnClickListener(view -> {
-            Message m = new Message(sender, receiverId, message.getText().toString());
+            Message m = new Message(sender, receiverId, message.getText().toString(),
+                    false, null, null);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Messages").add(m).addOnSuccessListener(documentReference -> {
                 message.setText("");
                 InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                setMessages();
             });
         });
-
         setMessages();
     }
 
@@ -102,32 +108,26 @@ public class MessageActivity extends AppCompatActivity {
 
     private void setMessages() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Messages").addSnapshotListener((value, error) -> {
-            messages = new ArrayList<>();
-            for(DocumentSnapshot d : value.getDocuments()) {
+        db.collection("Messages").get().addOnCompleteListener(task -> {
+            messages = new HashMap<>();
+            for(QueryDocumentSnapshot d : task.getResult()) {
                 Message m = d.toObject(Message.class);
                 if(m.getSender().equals(sender) && m.getReceiver().equals(receiverId)) {
-                    messages.add(m);
+                    messages.put(d.getId(), m);
                 } else if(m.getSender().equals(receiverId) && m.getReceiver().equals(sender)){
-                    messages.add(m);
+                    messages.put(d.getId(), m);
                 }
             }
-            Collections.sort(messages, (message, t1) -> {
-                if(message == null || t1 == null
-                || message.getDate() == null || t1.getDate() == null)
-                    return 0;
-                return message.getDate().compareTo(t1.getDate());
-            });
             setAdapter();
         });
         db.collection("Messages").get().addOnCompleteListener(task -> {
-            messages = new ArrayList<>();
+            messages = new HashMap<>();
             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                 Message m = queryDocumentSnapshot.toObject(Message.class);
                 if(m.getSender().equals(sender) && m.getReceiver().equals(receiverId)) {
-                    messages.add(m);
+                    messages.put(queryDocumentSnapshot.getId(), m);
                 } else if(m.getSender().equals(receiverId) && m.getReceiver().equals(sender)){
-                    messages.add(m);
+                    messages.put(queryDocumentSnapshot.getId(), m);
                 }
             }
             setAdapter();
@@ -135,6 +135,24 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
+        /*Collections.sort(messages.values(), (message, t1) -> {
+            if(message == null || t1 == null
+                    || message.getDate() == null || t1.getDate() == null)
+                return 0;
+            return message.getDate().compareTo(t1.getDate());
+        });*/
+        List<Map.Entry<String, Message>> l = new LinkedList<>(messages.entrySet());
+        Collections.sort(l, new Comparator<Map.Entry<String, Message>>() {
+            @Override
+            public int compare(Map.Entry<String, Message> e, Map.Entry<String, Message> e1) {
+                return e.getValue().getDate().compareTo(e1.getValue().getDate());
+            }
+        });
+        HashMap<String, Message> temp = new LinkedHashMap<>();
+        for (Map.Entry<String, Message> aa : l) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        messages = temp;
         MessageRecyclerView adapter = new MessageRecyclerView(messages, sender,receiverId);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         view.setLayoutManager(layoutManager);

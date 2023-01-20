@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.navigation.Navigation;
 import com.application.MindSet.R;
 import com.application.MindSet.databinding.FragmentCreateGameBinding;
 import com.application.MindSet.dto.Game;
+import com.application.MindSet.dto.Message;
 import com.application.MindSet.location.LocationService;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CreateGameFragment extends Fragment {
@@ -154,15 +157,27 @@ public class CreateGameFragment extends Fragment {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser mUser = mAuth.getCurrentUser();
                 String uID = mUser.getUid();
-                List<String> playersIDs;
+
                 //Caso hajam jogadores já adicionados, ir buscá-los
-                if (addPFrag != null)
-                    playersIDs = this.addPFrag.getPlayersInGameIDs();
-                else
-                    playersIDs = new ArrayList<>();
-                Game g = new Game(uID, sport, date.getTime(), local, playersIDs, localName);
+
+
+                Game g = new Game(uID, sport, date.getTime(), local, new ArrayList<>(), localName);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Games").add(g).addOnSuccessListener(documentReference -> {
+                    String gameId = documentReference.getId();
+                    Log.i("InvitePlayer", gameId);
+                    if (addPFrag != null) {
+                        List<String> invitedPlayersIDs = this.addPFrag.getInvitedPlayersIDs();
+                        for(String invitedPlayer : invitedPlayersIDs) {
+                            Message m = new Message(uID, invitedPlayer, "Invited for game",
+                                    true, gameId, g.getSport());
+                            db.collection("Messages").add(m).addOnSuccessListener(documentReference1 -> {
+                                Log.i("InvitePlayer", "Message created");
+                            }).addOnFailureListener(fail -> {
+                                Log.i("InvitePlayer", "Message failed");
+                            });
+                        }
+                    }
                     Toast.makeText(getActivity(), "Game created", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
 

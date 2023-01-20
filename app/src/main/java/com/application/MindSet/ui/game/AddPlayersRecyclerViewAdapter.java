@@ -1,9 +1,6 @@
 package com.application.MindSet.ui.game;
 
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
@@ -26,13 +23,13 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
     //names of players that can be invited
     private List<String> names;
     //ids of players that are invited
-    private List<String> playersInGameIDs;
+    private List<String> invitedPlayersIDs;
 
     public AddPlayersRecyclerViewAdapter(List<String> playersList, LinearLayout hsv, List<String> playersIDs) {
         this.names = playersList;
         this.hsv = hsv;
         this.playersIDs = playersIDs;
-        playersInGameIDs = new ArrayList<>();
+        invitedPlayersIDs = new ArrayList<>();
     }
 
     @NonNull
@@ -72,12 +69,12 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
                 @Override
                 public void onClick(View view) {
                     hsv.removeView(view);
-                    playersInGameIDs.remove(view.getTag(R.string.playerId));
+                    invitedPlayersIDs.remove(view.getTag(R.string.playerId));
                     notifyDataSetChanged();
                 }
             });
             hsv.addView(rl);
-            playersInGameIDs.add(playersIDs.get(position));
+            invitedPlayersIDs.add(playersIDs.get(position));
             playersIDs.remove(position);
             names.remove(position);
             ((ViewManager) holder.playerLayout.getParent()).removeView(holder.playerLayout);
@@ -90,8 +87,8 @@ public class AddPlayersRecyclerViewAdapter extends RecyclerView.Adapter<AddPlaye
         return playersIDs.size();
     }
 
-    public List<String> getPlayersInGameIDs() {
-        return playersInGameIDs;
+    public List<String> getInvitedPlayersIDs() {
+        return invitedPlayersIDs;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -48,8 +48,8 @@ public class AddPlayersFragment extends DialogFragment {
         view.setAdapter(adapter);
     }
 
-    public List<String> getPlayersInGameIDs() {
-        return adapter.getPlayersInGameIDs();
+    public List<String> getInvitedPlayersIDs() {
+        return adapter.getInvitedPlayersIDs();
     }
 
     @Override
