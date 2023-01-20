@@ -4,17 +4,21 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MotionEvent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.application.MindSet.databinding.ActivityMainBinding;
 import com.application.MindSet.gestureDetector.ShakeListener;
+import com.application.MindSet.gestureDetector.SimpleGestureListener;
 import com.application.MindSet.ui.sports.Sports;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             3,
             4
     };
+    private GestureDetectorCompat mDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         sports.setContext(this);
 
         new ShakeListener(sports, getApplicationContext());
+        this.mDetector = new GestureDetectorCompat(getApplicationContext(), new SimpleGestureListener(sports));
 
         this.context = getApplicationContext();
         askForPermissions();
@@ -96,5 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static Context getContext(){
         return context;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.mDetector.onTouchEvent(event);
+        return false;
     }
 }
