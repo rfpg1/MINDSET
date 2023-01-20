@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginTop="30dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_person_focus_24" />
 
@@ -24,6 +25,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/orange"
             android:text="Change Picture" />
 
         <Button
@@ -31,14 +36,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/orange"
             android:text="Upload Picture" />
 
-        <Button
-            android:id="@+id/take_picture_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Take Picture" />
+
 
     </LinearLayout>
 
