@@ -1,6 +1,7 @@
 package com.application.MindSet.ui.dashboard;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,11 @@ import com.application.MindSet.R;
 import com.application.MindSet.dto.Game;
 import com.application.MindSet.ui.gameInfo.GameInfo;
 import com.application.MindSet.utils.Pair;
+import com.application.MindSet.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,19 +36,19 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
 
         private TextView sport;
         private TextView date;
-        private TextView longitude;
-        private TextView latitude;
+        private TextView local;
         private ImageView star;
         private ImageView icon;
+        private ImageView remove;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            latitude = itemView.findViewById(R.id.latitude);
-            longitude = itemView.findViewById(R.id.longitude);
+            local = itemView.findViewById(R.id.local);
             date = itemView.findViewById(R.id.date);
             sport = itemView.findViewById(R.id.sport);
             star = itemView.findViewById(R.id.star);
             icon = itemView.findViewById(R.id.icon);
+            remove = itemView.findViewById(R.id.remove);
         }
     }
 
@@ -56,22 +62,36 @@ public class MyGamesRecyclerView extends RecyclerView.Adapter<MyGamesRecyclerVie
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Game g = (Game) myGamesList.keySet().toArray()[position];
-        double latitude = g.getLatitude();
-        holder.latitude.setText(latitude + "");
 
-        double longitude = g.getLongitude();
-        holder.longitude.setText(longitude + "");
+        String local = g.getLocalName();
+        holder.local.setText(local + "");
 
-        String date = g.getDate().toString();
-        holder.date.setText(date);
+        holder.date.setText(Utils.getDateDTO(g.getDate()));
 
         String sport = g.getSport();
         holder.sport.setText(sport);
 
        if(myGamesList.get(g).getFirst()){
            holder.star.setVisibility(View.VISIBLE);
+           holder.remove.setVisibility(View.VISIBLE);
+           holder.remove.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   String id = myGamesList.get(g).getSecond();
+                   Log.i("MyGamesRecycler", "remove clicked with id: " + id);
+                   FirebaseFirestore db = FirebaseFirestore.getInstance();
+                   db.collection("Games").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                       @Override
+                       public void onComplete(@NonNull Task<Void> task) {
+                           myGamesList.remove(g);
+                           notifyDataSetChanged();
+                       }
+                   });
+               }
+           });
        } else {
            holder.star.setVisibility(View.INVISIBLE);
+           holder.remove.setVisibility(View.INVISIBLE);
        }
 
         switch (sport){

@@ -29,7 +29,7 @@
         android:text="Sport" />
 
     <TextView
-        android:id="@+id/latitude"
+        android:id="@+id/local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sport"
@@ -37,24 +37,13 @@
         android:layout_marginLeft="4dp"
         android:layout_marginTop="2dp"
         android:layout_toRightOf="@id/icon"
-        android:text="Latitude" />
-
-    <TextView
-        android:id="@+id/longitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sport"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="2dp"
-        android:layout_toRightOf="@id/latitude"
-        android:text="Longitude" />
+        android:text="Local" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/latitude"
+        android:layout_below="@id/local"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="4dp"
@@ -75,5 +64,15 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         app:srcCompat="@drawable/star2" />
+
+    <ImageView
+        android:id="@+id/remove"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_baseline_close_24"
+        android:layout_below="@id/star"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>
