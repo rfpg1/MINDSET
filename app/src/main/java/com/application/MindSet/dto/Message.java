@@ -9,6 +9,10 @@ public class Message {
     private String message;
     private Date date;
     private boolean invited;
+
+
+
+    private String invitedPlayer;
     private String gameId;
     private String sport;
 
@@ -24,6 +28,18 @@ public class Message {
         this.invited = invited;
         this.gameId = gameId;
         this.sport = sport;
+    }
+
+    public Message(String sender, String receiver, String invitedPlayer, String message,
+                   boolean invited, String gameId, String sport) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.message = message;
+        this.date = new Date();
+        this.invited = invited;
+        this.gameId = gameId;
+        this.sport = sport;
+        this.invitedPlayer = invitedPlayer;
     }
 
     public void setInvited(boolean invited) {
@@ -56,6 +72,10 @@ public class Message {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getInvitedPlayer() {
+        return invitedPlayer;
     }
 
     @Override

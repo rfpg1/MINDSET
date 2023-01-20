@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -52,6 +53,11 @@ public class GameInfo extends AppCompatActivity {
         String id = getIntent().getExtras().get("id").toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String uID = mUser.getUid();
+
 
         db.collection("Games").document(id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -121,7 +127,7 @@ public class GameInfo extends AppCompatActivity {
                                             });
                                         } else {
                                             if(!participants.contains(myId)){
-                                                Message m = new Message(myId, ownerID, "Can I join your game?",
+                                                Message m = new Message(myId, ownerID, myId, "Can I join your game?",
                                                         true, documentSnapshot.getId(), sport);
                                                 db.collection("Messages").add(m).addOnSuccessListener(documentReference1 -> {
                                                     Log.i("InvitePlayer", "Message created");
@@ -169,27 +175,96 @@ public class GameInfo extends AppCompatActivity {
                                 db.collection("Profiles").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        LinearLayout rl = new LinearLayout(hsv.getContext());
-                                        rl.setOrientation(LinearLayout.VERTICAL);
+                                        if(ownerID.equals(myId)) {
+                                            if(!documentSnapshot.getId().equals(myId)) {
+                                                RelativeLayout rl = new RelativeLayout(hsv.getContext());
+                                                ImageView img = new ImageView(rl.getContext());
+                                                final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
+                                                int oneHunDP = (int) (100 * scale);
+                                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
+                                                int fiveDP = (int) (5 * scale);
+                                                params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
+                                                img.setImageResource(R.drawable.ic_outline_person_24);
+                                                img.setBackgroundResource(R.drawable.round_corners_orange);
+                                                img.setLayoutParams(params);
+                                                img.setId(R.id.imageView);
+                                                rl.addView(img);
+                                                TextView txt = new TextView(rl.getContext());
+                                                txt.setText(documentSnapshot.get("name", String.class));
+                                                txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+                                                params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                params.addRule(RelativeLayout.BELOW, img.getId());
+                                                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                                                txt.setLayoutParams(params);
+                                                rl.addView(txt);
+                                                ImageView x = new ImageView(rl.getContext());
+                                                x.setImageResource(R.drawable.ic_baseline_cancel_24);
+                                                x.setBackgroundResource(R.drawable.ic_baseline_close_24);
+                                                params = new RelativeLayout.LayoutParams((int) (25 * scale), (int) (25 * scale));
+                                                params.addRule(RelativeLayout.ALIGN_RIGHT, img.getId());
+                                                x.setLayoutParams(params);
+                                                x.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        RelativeLayout parent = (RelativeLayout) view.getParent();
+                                                        hsv.removeView(parent);
+                                                        participants.remove(s);
+                                                        participants.remove(ownerID);
+                                                        db.collection("Games").document(id).update("participantsID", participants);
+                                                        participants.add(ownerID);
+                                                    }
+                                                });
+                                                rl.addView(x);
+                                                hsv.addView(rl);
+                                            }else{
+                                                LinearLayout rl = new LinearLayout(hsv.getContext());
 
-                                        TextView txt = new TextView(rl.getContext());
-                                        txt.setText(documentSnapshot.get("name", String.class));
-                                        txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+                                                rl.setOrientation(LinearLayout.VERTICAL);
 
-                                        ImageView img = new ImageView(hsv.getContext());
-                                        final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
-                                        int oneHunDP = (int) (100 * scale);
-                                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
-                                        int fiveDP = (int) (5 * scale);
-                                        params.setMargins(fiveDP,fiveDP,fiveDP,fiveDP);
-                                        img.setImageResource(R.drawable.ic_outline_person_24);
-                                        img.setBackgroundResource(R.drawable.round_corners_orange);
-                                        img.setLayoutParams(params);
+                                                TextView txt = new TextView(rl.getContext());
+                                                txt.setText("You");
+                                                txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
 
-                                        rl.addView(img);
-                                        rl.addView(txt);
+                                                ImageView img = new ImageView(hsv.getContext());
+                                                final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
+                                                int oneHunDP = (int) (100 * scale);
+                                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
+                                                int fiveDP = (int) (5 * scale);
+                                                params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
+                                                img.setImageResource(R.drawable.ic_outline_person_24);
+                                                img.setBackgroundResource(R.drawable.round_corners_orange);
+                                                img.setLayoutParams(params);
 
-                                        hsv.addView(rl);
+                                                rl.addView(img);
+                                                rl.addView(txt);
+
+                                                hsv.addView(rl);
+
+                                            }
+                                        }else {
+                                            LinearLayout rl = new LinearLayout(hsv.getContext());
+
+                                            rl.setOrientation(LinearLayout.VERTICAL);
+
+                                            TextView txt = new TextView(rl.getContext());
+                                            txt.setText(documentSnapshot.get("name", String.class));
+                                            txt.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+
+                                            ImageView img = new ImageView(hsv.getContext());
+                                            final float scale = hsv.getContext().getResources().getDisplayMetrics().density;
+                                            int oneHunDP = (int) (100 * scale);
+                                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oneHunDP, oneHunDP);
+                                            int fiveDP = (int) (5 * scale);
+                                            params.setMargins(fiveDP, fiveDP, fiveDP, fiveDP);
+                                            img.setImageResource(R.drawable.ic_outline_person_24);
+                                            img.setBackgroundResource(R.drawable.round_corners_orange);
+                                            img.setLayoutParams(params);
+
+                                            rl.addView(img);
+                                            rl.addView(txt);
+
+                                            hsv.addView(rl);
+                                        }
                                     }
                                 });
                             }

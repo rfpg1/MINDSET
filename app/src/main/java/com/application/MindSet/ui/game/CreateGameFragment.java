@@ -169,7 +169,7 @@ public class CreateGameFragment extends Fragment {
                     if (addPFrag != null) {
                         List<String> invitedPlayersIDs = this.addPFrag.getInvitedPlayersIDs();
                         for(String invitedPlayer : invitedPlayersIDs) {
-                            Message m = new Message(uID, invitedPlayer, "Invited for game",
+                            Message m = new Message(uID, invitedPlayer, invitedPlayer, "Invited for game",
                                     true, gameId, g.getSport());
                             db.collection("Messages").add(m).addOnSuccessListener(documentReference1 -> {
                                 Log.i("InvitePlayer", "Message created");

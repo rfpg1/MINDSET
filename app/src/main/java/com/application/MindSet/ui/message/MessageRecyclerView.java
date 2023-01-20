@@ -88,7 +88,7 @@ public class MessageRecyclerView extends RecyclerView.Adapter<MessageRecyclerVie
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 db.collection("Games").document(m.getGameId()).get().addOnCompleteListener(task -> {
                                     Game g = task.getResult().toObject(Game.class);
-                                    g.addParticipant(m.getSender());
+                                    g.addParticipant(m.getInvitedPlayer());
                                     db.collection("Games").document(m.getGameId()).set(g);
                                     String mSender = m.getSender();
                                     String mReceiver = m.getReceiver();

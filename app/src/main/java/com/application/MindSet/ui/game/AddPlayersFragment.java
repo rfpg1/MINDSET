@@ -1,9 +1,12 @@
 package com.application.MindSet.ui.game;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -11,6 +14,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.application.MindSet.databinding.FragmentFeedBinding;
+import com.application.MindSet.dto.User;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddPlayersFragment extends DialogFragment {
@@ -37,9 +43,36 @@ public class AddPlayersFragment extends DialogFragment {
         view = binding.view;
         setAdapter();
 
+        EditText search = binding.searchBar;
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         return root;
     }
 
+    private void filter(String text) {
+        List<String> filteredList = new ArrayList<>();
+        for(String u : playersList) {
+            if(u.contains(text)){
+                filteredList.add(u);
+            }
+        }
+        adapter.filterList(filteredList);
+    }
     private void setAdapter() {
         this.adapter = new AddPlayersRecyclerViewAdapter(this.playersList, this.playersInGame, playersIDs);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
